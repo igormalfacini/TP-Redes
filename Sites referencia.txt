@@ -1,1 +1,3 @@
 https://www.devmedia.com.br/como-criar-um-chat-multithread-com-socket-em-java/33639
+
+https://www.devmedia.com.br/java-sockets-criando-comunicacoes-em-java/9465
