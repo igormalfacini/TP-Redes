@@ -1,4 +1,4 @@
-package conectividade;
+package conectividade.server;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -61,21 +61,5 @@ public class Server extends Thread {
 		System.out.println("Encerrando Servidor...");
 		this.interrupt();
 		System.exit(0);
-	}
-
-	public static void main(String[] args) {
-		int port = 12345;
-
-		Server server = new Server(port, "localhost");
-		server.startServer();
-
-		// Automatically shutdown in 5 minutes
-		try {
-			Thread.sleep(300000);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		server.stopServer();
 	}
 }
