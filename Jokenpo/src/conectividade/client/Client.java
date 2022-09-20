@@ -13,6 +13,9 @@ public class Client {
 	private Socket clientSocket;
 	private int port;
 	private byte[] address;
+	
+	private PrintWriter out;
+	private BufferedReader in; 
 
 	public Client(int port, byte[] address) {
 		this.port = port;
@@ -38,15 +41,30 @@ public class Client {
 		}
 	}
 
+	public String sendToServer(String message) {
+		try {
+			out = new PrintWriter(clientSocket.getOutputStream());
+			out.println(message);
+			out.flush();
+			
+			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			String response = (String) in.readLine();
+
+			return response;
+		} catch (Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+			return null;
+		}
+	}
+	
 	public String ping() {
 		try {
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
 			out.println("Ping");
 			out.flush();
+			
 			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
 			String response = (String) in.readLine();
-			in.close();
 
 			return response;
 		} catch (Exception e) {

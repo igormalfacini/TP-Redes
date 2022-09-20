@@ -16,6 +16,7 @@ public class RequestHandler extends Thread {
 
 	RequestHandler(Socket socket) {
 		this.socket = socket;
+		this.setName("RequestHandler" + socket.getInetAddress());
 	}
 
 	@Override
@@ -28,22 +29,22 @@ public class RequestHandler extends Thread {
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			out = new PrintWriter(socket.getOutputStream());
 
-			// Echo lines back to the client until the client closes the connection or we
-			// receive an empty line
-			String line = in.readLine();
-			while (line != null && line.length() > 0) {
-				if(line.equalsIgnoreCase("ping"));
-				out.println("Pong!");
-				out.flush();
-				line = in.readLine();
+			/**
+			 * Loop que fica constantemente verificando novas mensagens do cliente
+			 */
+			while (true) {
+				String line = in.readLine();
+				if("ping".equalsIgnoreCase(line)){
+					out.println("Pong!");
+					out.flush();	
+				}
+				else {
+					out.println("No response available");
+					out.flush();
+				}
+					
 			}
 
-			// Close our connection
-			in.close();
-			out.close();
-			socket.close();
-
-			System.out.println("Conexão encerrada");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

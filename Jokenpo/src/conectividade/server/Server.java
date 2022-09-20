@@ -15,12 +15,14 @@ public class Server extends Thread {
 	public Server(int port, byte[] address) {
 		this.port = port;
 		this.address = address;
+		this.setName("Server/" + address[0] + "." + address[1] + "." + address[2] + "." + address[3]);
 	}
 	
 	public Server(int port, String hostName) {
 		this.port = port;
 		try {
 			this.address = InetAddress.getByName(hostName).getAddress();
+			this.setName("Server/" + address[0] + "." + address[1] + "." + address[2] + "." + address[3]);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -35,7 +37,7 @@ public class Server extends Thread {
 				Socket cliente = serverSocket.accept();
 		        System.out.println("Cliente conectado: " + cliente.getInetAddress().getHostAddress());
 		  
-				RequestHandler requestHandler = new RequestHandler(cliente);
+		        RequestHandler requestHandler = new RequestHandler(cliente);
 				requestHandler.start();
 			} catch (IOException e) {
 				e.printStackTrace();
