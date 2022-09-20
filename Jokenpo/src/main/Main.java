@@ -8,6 +8,7 @@ import conectividade.server.Server;
 public class Main {
 	
 	private static Scanner scanner = new Scanner(System.in);;
+	
 	private static boolean hasServer;
 	
 	private static Server server;
@@ -20,7 +21,7 @@ public class Main {
 		
 		hasServer = (startServer == 1) ? (true) : (false);
 		
-		if(hasServer){
+		if(hasServer) {
 			server = new Server(12345, "localhost");
 			server.startServer();	
 		}
@@ -28,12 +29,16 @@ public class Main {
 		client = new Client(12345, "localhost");
 		client.startClient();
 		
+		/**
+		 * Loop principal
+		 * 
+		 * Encerrado ao informar "stop"
+		 */
 		String message = "";
-		while(!message.equalsIgnoreCase("stop"))
-		{
+		do {
 			message = scanner.next();
 			System.out.println(client.sendToServer(message));
-		}		
+		} while(!message.equalsIgnoreCase("stop"));
 		
 		if(hasServer)
 			server.stopServer();

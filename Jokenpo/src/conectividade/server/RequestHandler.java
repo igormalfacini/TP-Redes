@@ -32,18 +32,29 @@ public class RequestHandler extends Thread {
 			/**
 			 * Loop que fica constantemente verificando novas mensagens do cliente
 			 */
-			while (true) {
+			boolean stop = false;
+			do {
 				String line = in.readLine();
 				if("ping".equalsIgnoreCase(line)){
 					out.println("Pong!");
 					out.flush();	
 				}
+				else if("stop".equalsIgnoreCase(line)) {
+					out.println("Encerrando Conexão");
+					out.flush();
+					
+					stop = true;
+				}
 				else {
 					out.println("No response available");
 					out.flush();
 				}
-					
-			}
+			} while (!stop);
+			
+			in.close();
+			out.close();
+			socket.close();
+			this.interrupt();
 
 		} catch (Exception e) {
 			e.printStackTrace();
