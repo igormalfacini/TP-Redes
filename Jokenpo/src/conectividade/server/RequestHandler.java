@@ -5,10 +5,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-/**
- * Disponível em
- * https://www.infoworld.com/article/2853780/socket-programming-for-scalable-systems.html
- */
 public class RequestHandler extends Thread {
 	private Socket socket;
 	private BufferedReader in;

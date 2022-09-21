@@ -15,14 +15,14 @@ public class Server extends Thread {
 	public Server(int port, byte[] address) {
 		this.port = port;
 		this.address = address;
-		this.setName("Server/" + address[0] + "." + address[1] + "." + address[2] + "." + address[3]);
+		this.setName("Server");
 	}
 	
 	public Server(int port, String hostName) {
 		this.port = port;
 		try {
 			this.address = InetAddress.getByName(hostName).getAddress();
-			this.setName("Server/" + address[0] + "." + address[1] + "." + address[2] + "." + address[3]);
+			this.setName("Server");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -47,11 +47,9 @@ public class Server extends Thread {
 
 	public void startServer() {
 		try {
-			System.out.println("Iniciando Servidor na porta " + port + "...");
+			System.out.println("Iniciando Servidor no endereço " 
+						+ InetAddress.getByAddress(address).getHostAddress() + ":" + port + "...");
 			serverSocket = new ServerSocket(port);
-			
-			byte[] b = address;
-			System.out.println(b[0] + "." + b[1] + "." + b[2] + "." + b[3]);
 			
 			this.start();
 		} catch (IOException e) {
