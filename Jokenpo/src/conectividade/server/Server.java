@@ -32,6 +32,10 @@ public class Server extends Thread {
 	public void run() {
 		while (true) {
 			try {
+				if(serverSocket.isClosed()) {
+					break;
+				}
+				
 				System.out.println("Aguardando conexão");
 
 				Socket cliente = serverSocket.accept();
@@ -60,6 +64,8 @@ public class Server extends Thread {
 	public void stopServer() {
 		System.out.println("Encerrando Servidor...");
 		this.interrupt();
-		System.exit(0);
+		try {
+			serverSocket.close();
+		} catch (IOException e) {e.printStackTrace();}
 	}
 }

@@ -1,9 +1,8 @@
-package graficos;
+package telas;
 
-import static graficos.MainWindow.CUSTOMIZED_BLUE;
-import static graficos.MainWindow.fredoka;
+import static main.Main.CUSTOMIZED_BLUE;
+import static main.Main.fredoka;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -13,7 +12,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
+
+import main.Main;
 
 
 public class Menu extends JPanel {
@@ -22,10 +22,7 @@ public class Menu extends JPanel {
 	
 	private BufferedImage background;
 	private String pathBackground = "/background.png";
-	
-	/**
-	 * Componentes da tela
-	 */
+
 	private JTextField inputNickname;
 	private JButton btnJoin;
 	private JButton btnCreateRoom;
@@ -41,11 +38,11 @@ public class Menu extends JPanel {
 			e.printStackTrace();
 		}
 		
-		setPreferredSize(new Dimension(MainWindow.WIDTH * MainWindow.SCALE, MainWindow.HEIGHT * MainWindow.SCALE));
+		setPreferredSize(new Dimension(Main.WIDTH, Main.HEIGHT));
 		setLayout(null);
 		
-		inputNickname = new JTextField("Informe seu nome");
-		inputNickname.setFont(fredoka);;
+		inputNickname = new JTextField("Player 1");
+		inputNickname.setFont(fredoka);
 		inputNickname.setBounds(250, 500, 700, 60);
 		add(inputNickname);
 		
@@ -72,6 +69,41 @@ public class Menu extends JPanel {
 	protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	        g.drawImage(background, 0, 0, null);
+	        
+	        g.setColor(CUSTOMIZED_BLUE);
+	        g.setFont(fredoka);
+	        g.drawString("Informe seu nome", 479, 480);
 	}
 
+	public JTextField getInputNickname() {
+		return inputNickname;
+	}
+
+	public void setInputNickname(JTextField inputNickname) {
+		this.inputNickname = inputNickname;
+	}
+
+	public JButton getBtnJoin() {
+		return btnJoin;
+	}
+
+	public void setBtnJoin(JButton btnJoin) {
+		this.btnJoin = btnJoin;
+	}
+
+	public JButton getBtnCreateRoom() {
+		return btnCreateRoom;
+	}
+
+	public void setBtnCreateRoom(JButton btnCreateRoom) {
+		this.btnCreateRoom = btnCreateRoom;
+	}
+
+	public JButton getBtnExit() {
+		return btnExit;
+	}
+
+	public void setBtnExit(JButton btnExit) {
+		this.btnExit = btnExit;
+	}
 }
