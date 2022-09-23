@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import conectividade.client.Client;
 import conectividade.server.Server;
-import graficos.Game;
+import graficos.MainWindow;
 
 public class Main {
 	
@@ -17,16 +17,10 @@ public class Main {
 	
 	private static Server server;
 	private static Client client;
-	
-	/**
-	 * Interface Gráfica
-	 */
-	
-	private Game game;
 
 	public static void main(String[] args) {
 		
-		Game game = new Game();
+		new MainWindow();
 		
 		System.out.println("Start server? \n1- yes \n2- no");
 		int startServer = scanner.nextInt();
