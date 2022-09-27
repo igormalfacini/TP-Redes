@@ -9,7 +9,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -19,13 +21,18 @@ import conectividade.client.Client;
 import conectividade.server.Server;
 import telas.CreateRoom;
 import telas.JoinRoom;
+import telas.Lobby;
 import telas.Menu;
 
 public class Main extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Leitores
+	 */
 	private static Scanner scanner = new Scanner(System.in);
+	private static BufferedReader reader;
 	
 	/**
 	 * Dimensões
@@ -45,16 +52,18 @@ public class Main extends JFrame {
 	private Menu menu;
 	private JoinRoom joinRoom;
 	private CreateRoom createRoom;
+	private Lobby lobby;
 	
 	/**
 	 * Conectividade
 	 */
 	private static boolean hasServer;
-	private static Server server;
-	private static Client client;
-	private static int defaultPort = 12345;
+	public static Server server;
+	public static Client client;
+	public static int defaultPort = 12345;
+	public static File ipServer = new File("ip.txt");
 	
-	public Main()
+	public void initComponents()
 	{
 		/**
 		 * Inicialização da tela
@@ -98,6 +107,10 @@ public class Main extends JFrame {
         ge.registerFont(fredoka);
 	}
 	
+	/**
+	 * Configuração de Action Listeners
+	 */
+	
 	private void configureMenuActionListeners(Menu menu) {
 		
 		menu.getBtnJoin().addActionListener(new ActionListener() {
@@ -119,7 +132,8 @@ public class Main extends JFrame {
 				/**
 				 * Inicia Servidor
 				 */
-				server = new Server(defaultPort, "localhost");
+
+				server = getServerByIpTxt(ipServer);
 				server.startServer();
 				hasServer = true;
 				
@@ -145,13 +159,20 @@ public class Main extends JFrame {
 	private void configureJoinRoomActionListeners(JoinRoom joinRoom) {
 		joinRoom.getBtnJoin().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Adicionar exceção para servidor não encontrado
+				//TODO Adicionar exceção para servidor não encontrado
 				
-				//Pegar ip do textfield
-				client = new Client(defaultPort, "localhost");
+				String ip = joinRoom.getRoomCode().getText();
+				byte[] address = convertStringToAddress(ip);
+						
+				client = new Client(defaultPort, address);
 				client.startClient();
 				
-				//Tela de jogo
+				//TODO Tela de jogo
+				remove(joinRoom);
+				lobby = new Lobby();
+				add(lobby);
+				validate();
+				repaint();
 			}
 		});
 		
@@ -184,9 +205,40 @@ public class Main extends JFrame {
 		});
 	}
 	
+	private byte[] convertStringToAddress(String ip) {
+		String[] addressString = ip.split("\\.");
+		int tam = addressString.length;
+		byte[] address = new byte[tam];
+
+		for (int i = 0; i < addressString.length; i++) {
+			address[i] = (byte) Integer.parseInt(addressString[i]);
+		}
+		
+		return address;
+	}
+	
+	private Server getServerByIpTxt(File file) {
+		if (file.exists()) {
+			try {
+				reader = new BufferedReader(new FileReader(file.getName()));
+				String ip = reader.readLine();
+				byte[] address = convertStringToAddress(ip);
+				return new Server(defaultPort, address);
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("Iniciando servidor em 'localhost'");
+			}
+			
+		}
+		
+		return new Server(defaultPort, "localhost");
+	}
+	
 	public static void main(String[] args) {
 		
 		Main mainWindow = new Main();
+		mainWindow.initComponents();
+		
 				
 		//ip radmin
 		//byte[] address = {(byte) 26, (byte) 158, (byte) 211, (byte) 135};

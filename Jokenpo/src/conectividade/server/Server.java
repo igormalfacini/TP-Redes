@@ -68,4 +68,13 @@ public class Server extends Thread {
 			serverSocket.close();
 		} catch (IOException e) {e.printStackTrace();}
 	}
+
+	public String getAddress() {
+		try {
+			return InetAddress.getByAddress(address).getHostAddress();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return "0.0.0.0";
+	}
 }

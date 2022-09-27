@@ -37,7 +37,7 @@ public class CreateRoom  extends JPanel {
 		setPreferredSize(new Dimension(Main.WIDTH, Main.HEIGHT));
 		setLayout(null);
 		
-		roomCode = new JTextField("127.0.0.1");
+		roomCode = new JTextField(Main.server.getAddress());
 		roomCode.setFont(fredoka);
 		roomCode.setBounds(250, 500, 700, 60);
 		roomCode.setEnabled(false);
@@ -59,6 +59,10 @@ public class CreateRoom  extends JPanel {
 	protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	        g.drawImage(background, 0, 0, null);
+	        
+	        g.setColor(CUSTOMIZED_BLUE);
+	        g.setFont(fredoka);
+	        g.drawString("Código da Sala", 500, 480);
 	}
 
 	public JButton getBtnCancel() {
