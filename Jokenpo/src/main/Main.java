@@ -44,6 +44,7 @@ public class Main extends JFrame {
 	 * Estilização
 	 */
 	public static final Color CUSTOMIZED_BLUE = new Color(119, 179, 214);
+	public static final Color BACKGROUND_COLOR = new Color(255, 245, 203);
 	public static Font fredoka; 
 	
 	/**
@@ -238,10 +239,6 @@ public class Main extends JFrame {
 		
 		Main mainWindow = new Main();
 		mainWindow.initComponents();
-		
-				
-		//ip radmin
-		//byte[] address = {(byte) 26, (byte) 158, (byte) 211, (byte) 135};
 
 		/**
 		 * Loop principal

@@ -1,16 +1,19 @@
 package telas;
 
+import static main.Main.BACKGROUND_COLOR;
 import static main.Main.CUSTOMIZED_BLUE;
 import static main.Main.fredoka;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -22,8 +25,11 @@ public class Lobby extends JPanel {
 	
 	private BufferedImage background;
 	private String pathBackground = "/background-lobby.png";
-	
+	private ImageIcon selectedArrow = new ImageIcon("res/selected-arrow-right.png");
+	private ImageIcon disabledArrow = new ImageIcon("res/disabled-arrow-right.png");
+
 	private JButton btnConfirm;
+	private ButtonGroup radioGroup;
 	
 	public Lobby()
 	{	
@@ -38,28 +44,42 @@ public class Lobby extends JPanel {
 		setPreferredSize(new Dimension(Main.WIDTH, Main.HEIGHT));
 		setLayout(null);
 				
-		JRadioButton tesoura = new JRadioButton();
-		tesoura.setName("tesoura");
-		tesoura.setBackground(new Color(0, 0, 0, 0));
-		tesoura.setBounds(390, 650, 25, 25);
-		add(tesoura);
+		/**
+		 * RadioButtons 
+		 */
+		radioGroup = new ButtonGroup();
 		
-		JRadioButton papel = new JRadioButton();
-		papel.setName("papel");
-		papel.setBackground(new Color(0, 0, 0, 0));
-		papel.setBounds(590, 650, 25, 25);
-		add(papel);
+		JRadioButton btnTesoura = new JRadioButton(disabledArrow);
+		btnTesoura.setName("tesoura");
+		btnTesoura.setSelected(true);
+		btnTesoura.setBackground(BACKGROUND_COLOR);
+		btnTesoura.setBounds(80, 350, 70, 64);
+		btnTesoura.setSelectedIcon(selectedArrow);
+		btnTesoura.setDisabledIcon(disabledArrow);
+		radioGroup.add(btnTesoura);
+		add(btnTesoura);
 		
-		JRadioButton pedra = new JRadioButton();
-		pedra.setName("pedra");
-		pedra.setBackground(new Color(0, 0, 0, 0));
-		pedra.setBounds(790, 650, 25, 25);
-		add(pedra);
+		JRadioButton btnPapel = new JRadioButton(disabledArrow);
+		btnPapel.setName("papel");
+		btnPapel.setBackground(BACKGROUND_COLOR);
+		btnPapel.setBounds(80, 530, 70, 64);
+		btnPapel.setSelectedIcon(selectedArrow);
+		btnPapel.setDisabledIcon(disabledArrow);
+		radioGroup.add(btnPapel);
+		add(btnPapel);
 		
-//		ImageIcon imageIcon = new ImageIcon("/res/loading.gif");
-//		JLabel label = new JLabel(imageIcon);
-//		label.setBounds(570, 550, 60, 60);
-//		add(label);
+		JRadioButton btnPedra = new JRadioButton(disabledArrow);
+		btnPedra.setName("pedra");
+		btnPedra.setBackground(BACKGROUND_COLOR);
+		btnPedra.setBounds(80, 700, 70, 64);
+		btnPedra.setSelectedIcon(selectedArrow);
+		btnPedra.setDisabledIcon(disabledArrow);
+		radioGroup.add(btnPedra);
+		add(btnPedra);
+		
+		JLabel label = new JLabel(new ImageIcon(getClass().getResource("/waiting.gif")));
+		label.setBounds(470, 350, 200, 200);
+		add(label);
 		
 		btnConfirm = new JButton("Confirmar");
 		btnConfirm.setFont(fredoka);
@@ -72,6 +92,11 @@ public class Lobby extends JPanel {
 	protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	        g.drawImage(background, 0, 0, null);
+	        
+	        g.setColor(CUSTOMIZED_BLUE);
+	        g.setFont(fredoka.deriveFont((float) 16));
+	        g.drawString("Selecione sua jogada clicando", 470, 650);
+	        g.drawString("sobre a seta correspondente!", 470, 665);
 	}
 
 	public JButton getBtnConfirm() {
@@ -81,5 +106,7 @@ public class Lobby extends JPanel {
 	public void setBtnConfirm(JButton BtnConfirm) {
 		this.btnConfirm = BtnConfirm;
 	}
+	
+	
 }
 
