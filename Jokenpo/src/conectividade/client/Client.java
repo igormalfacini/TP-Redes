@@ -31,13 +31,16 @@ public class Client {
 		}
 	}
 
-	public void startClient() {
+	public boolean startClient() {
 		try {
 			clientSocket = new Socket(InetAddress.getByAddress(address), port);
+			return true;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 

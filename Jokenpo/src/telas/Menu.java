@@ -1,5 +1,6 @@
 package telas;
 
+import static java.awt.Color.RED;
 import static main.Main.CUSTOMIZED_BLUE;
 import static main.Main.fredoka;
 
@@ -75,12 +76,16 @@ public class Menu extends JPanel {
 	        g.drawString("Informe seu nome", 479, 480);
 	}
 
-	public JTextField getInputNickname() {
-		return inputNickname;
+	public void paintErrorMessage() {
+		Graphics g = background.getGraphics();
+		
+		g.setColor(RED);
+        g.setFont(fredoka);
+        g.drawString("Erro ao iniciar Servidor", 450, 800);
 	}
-
-	public void setInputNickname(JTextField inputNickname) {
-		this.inputNickname = inputNickname;
+	
+	public String getNickname() {
+		return inputNickname.getText();
 	}
 
 	public JButton getBtnJoin() {

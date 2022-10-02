@@ -59,6 +59,7 @@ public class Main extends JFrame {
 	 * Conectividade
 	 */
 	private static boolean hasServer;
+	private static boolean hasClient;
 	public static Server server;
 	public static Client client;
 	public static int defaultPort = 12345;
@@ -135,18 +136,28 @@ public class Main extends JFrame {
 				 */
 
 				server = getServerByIpTxt(ipServer);
-				server.startServer();
-				hasServer = true;
+				hasServer = server.startServer();
 				
 				/**
 				 * Redesenha a tela
 				 */
-				remove(menu);
-				createRoom = new CreateRoom();
-				configureCreateRoomActionListeners(createRoom);
-				add(createRoom);
-				validate();
-				repaint();
+				if(hasServer) {					
+					remove(menu);
+					createRoom = new CreateRoom();
+					configureCreateRoomActionListeners(createRoom);
+					add(createRoom);
+					validate();
+					repaint();
+				}
+				
+				/**
+				 * Erro ao iniciar server
+				 */
+				else {
+					menu.paintErrorMessage();
+					validate();
+					repaint();
+				}
 			}
 		});
 		
@@ -160,20 +171,29 @@ public class Main extends JFrame {
 	private void configureJoinRoomActionListeners(JoinRoom joinRoom) {
 		joinRoom.getBtnJoin().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO Adicionar exceção para servidor não encontrado
-				
+			
 				String ip = joinRoom.getRoomCode().getText();
 				byte[] address = convertStringToAddress(ip);
 						
 				client = new Client(defaultPort, address);
-				client.startClient();
+				hasClient = client.startClient();
 				
-				//TODO Tela de jogo
-				remove(joinRoom);
-				lobby = new Lobby();
-				add(lobby);
-				validate();
-				repaint();
+				if(hasClient) {
+					remove(joinRoom);
+					lobby = new Lobby();
+					add(lobby);
+					validate();
+					repaint();					
+				}
+				
+				/**
+				 * Erro ao iniciar client
+				 */
+				else {
+					joinRoom.paintErrorMessage();
+					validate();
+					repaint();	
+				}
 			}
 		});
 		

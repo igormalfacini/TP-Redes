@@ -49,15 +49,18 @@ public class Server extends Thread {
 		}
 	}
 
-	public void startServer() {
+	public boolean startServer() {
 		try {
 			System.out.println("Iniciando Servidor no endereço " 
 						+ InetAddress.getByAddress(address).getHostAddress() + ":" + port + "...");
 			serverSocket = new ServerSocket(port);
 			
 			this.start();
+			
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 

@@ -85,7 +85,7 @@ public class Lobby extends JPanel {
 		btnConfirm.setFont(fredoka);
 		btnConfirm.setBackground(CUSTOMIZED_BLUE);
 		btnConfirm.setBounds(500, 700, 200, 40);
-		add(btnConfirm);
+		add(btnConfirm);	
 	}
 	
 	@Override
@@ -95,8 +95,15 @@ public class Lobby extends JPanel {
 	        
 	        g.setColor(CUSTOMIZED_BLUE);
 	        g.setFont(fredoka.deriveFont((float) 16));
+	        
+	        //Alternar para "voce selecionou *jogada*"
 	        g.drawString("Selecione sua jogada clicando", 470, 650);
 	        g.drawString("sobre a seta correspondente!", 470, 665);
+	        
+	        g.setColor(CUSTOMIZED_BLUE);
+	        g.setFont(fredoka.deriveFont((float) 20));
+	        //ALternar para "*nome* escolheu sua jogada!"
+	        g.drawString("Aguardando jogada de *nome*", 435, 580);
 	}
 
 	public JButton getBtnConfirm() {
@@ -106,7 +113,13 @@ public class Lobby extends JPanel {
 	public void setBtnConfirm(JButton BtnConfirm) {
 		this.btnConfirm = BtnConfirm;
 	}
-	
-	
+
+	public ButtonGroup getRadioGroup() {
+		return radioGroup;
+	}
+
+	public void setRadioGroup(ButtonGroup radioGroup) {
+		this.radioGroup = radioGroup;
+	}
 }
 

@@ -1,5 +1,6 @@
 package telas;
 
+import static java.awt.Color.RED;
 import static main.Main.CUSTOMIZED_BLUE;
 import static main.Main.fredoka;
 
@@ -72,6 +73,14 @@ public class JoinRoom extends JPanel {
 	        g.setColor(CUSTOMIZED_BLUE);
 	        g.setFont(fredoka);
 	        g.drawString("Informe o Código da Sala", 430, 480);
+	}
+	
+	public void paintErrorMessage() {
+		Graphics g = background.getGraphics();
+		
+		g.setColor(RED);
+        g.setFont(fredoka);
+        g.drawString("Erro ao se conectar ao Servidor", 400, 750);
 	}
 	
 	public JFormattedTextField getRoomCode() {
