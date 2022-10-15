@@ -9,7 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -43,10 +45,9 @@ public class CreateRoom  extends JPanel {
 		roomCode.setEnabled(false);
 		add(roomCode);
 		
-//		ImageIcon imageIcon = new ImageIcon("/res/loading.gif");
-//		JLabel label = new JLabel(imageIcon);
-//		label.setBounds(570, 550, 60, 60);
-//		add(label);
+		JLabel label = new JLabel(new ImageIcon(getClass().getResource("/ellipsis.gif")));
+		label.setBounds(930, 700, 100, 100);
+		add(label);
 		
 		btnCancel = new JButton("Voltar");
 		btnCancel.setFont(fredoka);
@@ -63,6 +64,10 @@ public class CreateRoom  extends JPanel {
 	        g.setColor(CUSTOMIZED_BLUE);
 	        g.setFont(fredoka);
 	        g.drawString("Código da Sala", 500, 480);
+	        
+	        g.setColor(CUSTOMIZED_BLUE);
+	        g.setFont(fredoka.deriveFont(6));
+	        g.drawString("Aguardando Conexão", 850, 800);
 	}
 
 	public JButton getBtnCancel() {

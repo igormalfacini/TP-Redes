@@ -77,7 +77,7 @@ public class Lobby extends JPanel {
 		radioGroup.add(btnPedra);
 		add(btnPedra);
 		
-		JLabel label = new JLabel(new ImageIcon(getClass().getResource("/waiting.gif")));
+		JLabel label = new JLabel(new ImageIcon(getClass().getResource("/magnifier.gif")));
 		label.setBounds(470, 350, 200, 200);
 		add(label);
 		

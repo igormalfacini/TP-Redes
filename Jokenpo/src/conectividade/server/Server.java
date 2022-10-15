@@ -40,7 +40,7 @@ public class Server extends Thread {
 
 				Socket cliente = serverSocket.accept();
 		        System.out.println("Cliente conectado: " + cliente.getInetAddress().getHostAddress());
-		  
+		        
 		        RequestHandler requestHandler = new RequestHandler(cliente);
 				requestHandler.start();
 			} catch (IOException e) {

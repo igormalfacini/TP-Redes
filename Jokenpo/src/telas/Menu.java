@@ -81,7 +81,7 @@ public class Menu extends JPanel {
 		
 		g.setColor(RED);
         g.setFont(fredoka);
-        g.drawString("Erro ao iniciar Servidor", 450, 800);
+        g.drawString("Erro ao iniciar Servidor", 455, 800);
 	}
 	
 	public String getNickname() {
