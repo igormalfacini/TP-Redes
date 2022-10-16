@@ -1,5 +1,7 @@
 package main;
 
+import static conectividade.Flag.NICKNAME;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -13,10 +15,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
+import conectividade.Flag;
 import conectividade.client.Client;
 import conectividade.server.Server;
 import telas.CreateRoom;
@@ -31,14 +34,14 @@ public class Main extends JFrame {
 	/**
 	 * Leitores
 	 */
-	private static Scanner scanner = new Scanner(System.in);
 	private static BufferedReader reader;
 	
 	/**
-	 * Dimensões
+	 * Tela
 	 */
 	public static final int WIDTH = 1200;
 	public static final int HEIGHT = 900;
+	private static Main mainWindow;
 	
 	/**
 	 * Estilização
@@ -50,10 +53,7 @@ public class Main extends JFrame {
 	/**
 	 * Panels
 	 */
-	private Menu menu;
-	private JoinRoom joinRoom;
-	private CreateRoom createRoom;
-	private Lobby lobby;
+	public JPanel currentPanel = null;
 	
 	/**
 	 * Conectividade
@@ -64,6 +64,11 @@ public class Main extends JFrame {
 	public static Client client;
 	public static int defaultPort = 12345;
 	public static File ipServer = new File("ip.txt");
+	
+	/*
+	 * Nome Jogador
+	 */
+	private String nomeJogador;
 	
 	public void initComponents()
 	{
@@ -81,9 +86,7 @@ public class Main extends JFrame {
 		/**
 		 * A tela se inicia com o menu
 		 */
-		menu = new Menu();
-		configureMenuActionListeners(menu);
-		add(menu);
+		configureMenu();
 		
 		pack();
 		setLocationRelativeTo(null);
@@ -117,37 +120,35 @@ public class Main extends JFrame {
 		
 		menu.getBtnJoin().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/**
-				 * Redesenha a tela
-				 */
-				remove(menu);
-				joinRoom = new JoinRoom();
-				configureJoinRoomActionListeners(joinRoom);
-				add(joinRoom);
-				validate();
-				repaint();
+		
+				nomeJogador = menu.getNickname();
+				
+				configureJoinRoom();
 			}
 		});
 		
 		menu.getBtnCreateRoom().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/**
-				 * Inicia Servidor
+				 * Armazena nome do jogador
 				 */
-
+				nomeJogador = menu.getNickname();
+				
+				/**
+				 * Inicia Servidor e Cliente
+				 */
 				server = getServerByIpTxt(ipServer);
 				hasServer = server.startServer();
+				
+				client = new Client(defaultPort, server.getAddress(), mainWindow);
+				hasClient = client.startClient();
 				
 				/**
 				 * Redesenha a tela
 				 */
-				if(hasServer) {					
-					remove(menu);
-					createRoom = new CreateRoom();
-					configureCreateRoomActionListeners(createRoom);
-					add(createRoom);
-					validate();
-					repaint();
+				if(hasServer && hasClient) {
+					client.sendToServer(NICKNAME + nomeJogador);
+					configureCreateRoom();
 				}
 				
 				/**
@@ -175,15 +176,11 @@ public class Main extends JFrame {
 				String ip = joinRoom.getRoomCode().getText();
 				byte[] address = convertStringToAddress(ip);
 						
-				client = new Client(defaultPort, address);
+				client = new Client(defaultPort, address, mainWindow);
 				hasClient = client.startClient();
 				
 				if(hasClient) {
-					remove(joinRoom);
-					lobby = new Lobby();
-					add(lobby);
-					validate();
-					repaint();					
+					client.sendToServer(NICKNAME + nomeJogador);			
 				}
 				
 				/**
@@ -197,31 +194,20 @@ public class Main extends JFrame {
 			}
 		});
 		
-		joinRoom.getBtnBack().addActionListener(new ActionListener() {
+		joinRoom.getBtnVoltar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/**
-				 * Redesenha a tela
-				 */
-				remove(joinRoom);
-				add(menu);
-				validate();
-				repaint();
+				configureMenu();
 			}
 		});
 	}
 	
 	private void configureCreateRoomActionListeners(CreateRoom createRoom) {
-		createRoom.getBtnCancel().addActionListener(new ActionListener() {
+		createRoom.getBtnVoltar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				server.stopServer();
-				
-				/**
-				 * Redesenha a tela
-				 */
-				remove(createRoom);
-				add(menu);
-				validate();
-				repaint();
+				client.sendToServer(Flag.STOP + "1");
+				client.stopClient();
+
+				configureMenu();
 			}
 		});
 	}
@@ -245,33 +231,69 @@ public class Main extends JFrame {
 				String ip = reader.readLine();
 				byte[] address = convertStringToAddress(ip);
 				return new Server(defaultPort, address);
-			} catch (IOException e) {
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Iniciando servidor em 'localhost'");
 			}
-			
 		}
 		
 		return new Server(defaultPort, "localhost");
 	}
 	
+	/**
+	 * Configuração dos Panels
+	 */
+	
+	public void configureMenu() {
+		if(currentPanel != null)
+			remove(currentPanel);
+		
+		Menu menu = new Menu();
+		currentPanel = menu;
+		configureMenuActionListeners(menu);
+		add(menu);
+		validate();
+		repaint();
+	}
+	
+	public void configureJoinRoom() {
+		if(currentPanel != null)
+			remove(currentPanel);
+		
+		JoinRoom joinRoom = new JoinRoom();
+		currentPanel = joinRoom;
+		configureJoinRoomActionListeners(joinRoom);
+		add(joinRoom);
+		validate();
+		repaint();
+	}
+	
+	public void configureCreateRoom() {
+		if(currentPanel != null)
+			remove(currentPanel);
+		
+		CreateRoom createRoom = new CreateRoom();
+		currentPanel = createRoom;
+		configureCreateRoomActionListeners(createRoom);
+		add(createRoom);
+		validate();
+		repaint();
+	}
+	
+	public void configureLobby() {
+		if(currentPanel != null)
+			remove(currentPanel);
+		
+		Lobby lobby = new Lobby();
+		currentPanel = lobby;
+		add(lobby);
+		validate();
+		repaint();		
+	}
+	
 	public static void main(String[] args) {
-		
-		Main mainWindow = new Main();
+		mainWindow = new Main();
 		mainWindow.initComponents();
-
-		/**
-		 * Loop principal
-		 * 
-		 * Encerrado ao informar "stop"
-		 */
-		String message = "";
-		do {
-			message = scanner.next();
-			System.out.println(client.sendToServer(message));
-		} while(!message.equalsIgnoreCase("stop"));
-		
-		if(hasServer)
-			server.stopServer();
 	}
 }

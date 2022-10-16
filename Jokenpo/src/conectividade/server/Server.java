@@ -1,21 +1,37 @@
 package conectividade.server;
 
+import static conectividade.Flag.INICIAR;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
+import jokenpo.Jogo;
 
 public class Server extends Thread {
 
 	private ServerSocket serverSocket;
 	private int port;
 	private byte[] address;
+	
+	private ArrayList<Socket> clientSockets;
+	private ArrayList<RequestHandler> requestHandlers;
+	
+	private ArrayList<String> nomesJogadores;
+	private Jogo jogo;
 
+	
 	public Server(int port, byte[] address) {
 		this.port = port;
 		this.address = address;
 		this.setName("Server");
+		
+		clientSockets = new ArrayList<Socket>();
+		requestHandlers = new ArrayList<RequestHandler>();
+		nomesJogadores = new ArrayList<String>();
 	}
 	
 	public Server(int port, String hostName) {
@@ -30,7 +46,8 @@ public class Server extends Thread {
 
 	@Override
 	public void run() {
-		while (true) {
+		boolean recebendoConexoes = true;
+		while (recebendoConexoes) {
 			try {
 				if(serverSocket.isClosed()) {
 					break;
@@ -39,13 +56,26 @@ public class Server extends Thread {
 				System.out.println("Aguardando conexão");
 
 				Socket cliente = serverSocket.accept();
+				clientSockets.add(cliente);
 		        System.out.println("Cliente conectado: " + cliente.getInetAddress().getHostAddress());
 		        
-		        RequestHandler requestHandler = new RequestHandler(cliente);
+		        RequestHandler requestHandler = new RequestHandler(cliente, this);
+		        requestHandlers.add(requestHandler);
 				requestHandler.start();
+				
+				/**
+				 * Limita que apenas dois clientes possam se conectar
+				 */
+				if(clientSockets.size() == 2)
+					recebendoConexoes = false;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		if(clientSockets.size() == 2) {
+			jogo = new Jogo(nomesJogadores.get(0), nomesJogadores.get(1));
+			sendToClients(INICIAR + "1");
 		}
 	}
 
@@ -66,6 +96,12 @@ public class Server extends Thread {
 
 	public void stopServer() {
 		System.out.println("Encerrando Servidor...");
+		for (int i = 0; i < clientSockets.size(); i++) {
+			try {
+				requestHandlers.get(i).interrupt();
+				clientSockets.get(i).close();
+			} catch (IOException e) {e.printStackTrace();}
+		}
 		this.interrupt();
 		try {
 			serverSocket.close();
@@ -79,5 +115,14 @@ public class Server extends Thread {
 			e.printStackTrace();
 		}
 		return "0.0.0.0";
+	}
+
+	public void sendToClients(String message) {
+		for (RequestHandler requestHandler : requestHandlers) {
+			requestHandler.sendToClient(message);
+		}
+	}
+	public ArrayList<String> getNomesJogadores() {
+		return nomesJogadores;
 	}
 }

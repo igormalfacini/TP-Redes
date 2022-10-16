@@ -1,12 +1,11 @@
 package conectividade.client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import main.Main;
 
 public class Client {
 
@@ -14,26 +13,34 @@ public class Client {
 	private int port;
 	private byte[] address;
 	
-	private PrintWriter out;
-	private BufferedReader in; 
+	/**
+	 * Responsável por receber e enviar mensagens entre o Servidor e o Cliente
+	 */
+	private RequestHandler requestHandler;
+	
+	private Main mainWindow;
 
-	public Client(int port, byte[] address) {
+	public Client(int port, byte[] address, Main main) {
 		this.port = port;
 		this.address = address;
+		this.mainWindow = main;
 	}
-
-	public Client(int port, String hostName) {
+	
+	public Client(int port, String hostName, Main main) {
 		this.port = port;
 		try {
 			this.address = InetAddress.getByName(hostName).getAddress();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
+		this.mainWindow = main;
 	}
 
 	public boolean startClient() {
 		try {
 			clientSocket = new Socket(InetAddress.getByAddress(address), port);
+			requestHandler = new RequestHandler(clientSocket, this);
+			requestHandler.start();
 			return true;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -43,36 +50,27 @@ public class Client {
 			return false;
 		}
 	}
-
-	public String sendToServer(String message) {
+	
+	public boolean stopClient() {
 		try {
-			out = new PrintWriter(clientSocket.getOutputStream());
-			out.println(message);
-			out.flush();
-			
-			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			String response = (String) in.readLine();
-
-			return response;
-		} catch (Exception e) {
-			System.out.println("Erro: " + e.getMessage());
-			return null;
+			requestHandler.interrupt();
+			clientSocket.close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
-	
-	public String ping() {
-		try {
-			PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
-			out.println("Ping");
-			out.flush();
-			
-			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			String response = (String) in.readLine();
 
-			return response;
-		} catch (Exception e) {
-			System.out.println("Erro: " + e.getMessage());
-			return null;
-		}
+	public void sendToServer(String message) {
+		requestHandler.sendToServer(message);
+	}
+
+	public String sendToServer(String message, boolean getResponse) {
+		return requestHandler.sendToServer(message, getResponse);
+	}
+	
+	public void startLobby() {
+		mainWindow.configureLobby();
 	}
 }

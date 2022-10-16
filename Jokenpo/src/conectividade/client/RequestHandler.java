@@ -1,7 +1,4 @@
-package conectividade.server;
-
-import static conectividade.Flag.NICKNAME;
-import static conectividade.Flag.STOP;
+package conectividade.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,18 +7,18 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- * Classe responsável por receber e enviar mensagens entre o Servidor e os Clientes
+ * Classe responsável por receber e enviar mensagens entre Cliente e o Servidor
  */
 public class RequestHandler extends Thread {
 	private Socket socket;
-	private Server server;
+	private Client cliente;
 	private BufferedReader in;
 	private PrintWriter out;
 
-	RequestHandler(Socket socket, Server server) {
+	RequestHandler(Socket socket, Client cliente) {
 		this.socket = socket;
-		this.server = server;
-		this.setName("Server RequestHandler" + socket.getInetAddress());
+		this.cliente = cliente;
+		this.setName("Client Request Handler" + socket.getInetAddress());
 		
 		/**
 		 * in - Input de mensagens do cliente
@@ -40,7 +37,7 @@ public class RequestHandler extends Thread {
 	public void run() {
 		try {
 			/**
-			 * Loop que fica constantemente verificando novas mensagens do cliente
+			 * Loop que fica constantemente verificando novas mensagens do Servidor
 			 */
 			boolean stop = false;
 			do {
@@ -48,13 +45,13 @@ public class RequestHandler extends Thread {
 				String flag = line[0];
 				String value = line[1];
 				
-				if("NICKNAME".equals(flag)) {
-					adicionarJogador(value);
+				if("INICIAR".equals(flag)) {
+					cliente.startLobby();
 				}
 				
 				if("STOP".equals(flag)) {
+					sendToServer("Encerrando Conexão");
 					stop = true;
-					server.stopServer();
 				}
 				
 			} while (!stop);
@@ -69,15 +66,31 @@ public class RequestHandler extends Thread {
 		}
 	}
 
-	private void adicionarJogador(String nomeJogador) {
-		server.getNomesJogadores().add(nomeJogador);
-	}
-	
 	/**
 	 * @param message - Mensagem a ser enviada para o servidor
 	 */
-	public void sendToClient(String message) {
+	public void sendToServer(String message) {
 		out.println(message);
 		out.flush();
+	}
+
+	/**
+	 * @param message - Mensagem a ser enviada para o server
+	 * @param getResponse - Indica se o Cliente deve esperar por uma resposta do server
+	 * @return String - resposta do Servidor
+	 */
+	public String sendToServer(String message, boolean getResponse) {
+		sendToServer(message);
+		
+		if(getResponse) {
+			try {
+				String response = (String) in.readLine();
+	
+				return response;
+			} catch (Exception e) {
+				System.out.println("Erro: " + e.getMessage());
+			}
+		}
+		return null;
 	}
 }

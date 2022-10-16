@@ -26,7 +26,7 @@ public class JoinRoom extends JPanel {
 	
 	private JFormattedTextField roomCode;
 	private JButton btnJoin;
-	private JButton btnBack;
+	private JButton btnVoltar;
 
 	public JoinRoom()
 	{	
@@ -58,11 +58,11 @@ public class JoinRoom extends JPanel {
 		btnJoin.setBounds(500, 600, 200, 40);
 		add(btnJoin);
 		
-		btnBack = new JButton("Voltar");
-		btnBack.setFont(fredoka);
-		btnBack.setBackground(CUSTOMIZED_BLUE);
-		btnBack.setBounds(500, 650, 200, 40);
-		add(btnBack);
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setFont(fredoka);
+		btnVoltar.setBackground(CUSTOMIZED_BLUE);
+		btnVoltar.setBounds(500, 650, 200, 40);
+		add(btnVoltar);
 	}
 	
 	@Override
@@ -94,17 +94,9 @@ public class JoinRoom extends JPanel {
 	public JButton getBtnJoin() {
 		return btnJoin;
 	}
-
-	public void setBtnJoin(JButton btnJoin) {
-		this.btnJoin = btnJoin;
-	}
 	
-	public JButton getBtnBack() {
-		return btnBack;
-	}
-
-	public void setBtnBack(JButton btnBack) {
-		this.btnBack = btnBack;
+	public JButton getBtnVoltar() {
+		return btnVoltar;
 	}
 }
 

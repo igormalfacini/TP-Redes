@@ -24,7 +24,7 @@ public class CreateRoom  extends JPanel {
 	private String pathBackground = "/background.png";
 	
 	private JTextField roomCode;
-	private JButton btnCancel;
+	private JButton btnVoltar;
 	
 	public CreateRoom()
 	{	
@@ -49,11 +49,11 @@ public class CreateRoom  extends JPanel {
 		label.setBounds(930, 700, 100, 100);
 		add(label);
 		
-		btnCancel = new JButton("Voltar");
-		btnCancel.setFont(fredoka);
-		btnCancel.setBackground(CUSTOMIZED_BLUE);
-		btnCancel.setBounds(500, 650, 200, 40);
-		add(btnCancel);
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setFont(fredoka);
+		btnVoltar.setBackground(CUSTOMIZED_BLUE);
+		btnVoltar.setBounds(500, 650, 200, 40);
+		add(btnVoltar);
 	}
 	
 	@Override
@@ -70,12 +70,8 @@ public class CreateRoom  extends JPanel {
 	        g.drawString("Aguardando Conexão", 850, 800);
 	}
 
-	public JButton getBtnCancel() {
-		return btnCancel;
-	}
-
-	public void setBtnCancel(JButton btnCancel) {
-		this.btnCancel = btnCancel;
+	public JButton getBtnVoltar() {
+		return btnVoltar;
 	}
 }
 
