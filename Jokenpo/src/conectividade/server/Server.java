@@ -73,6 +73,15 @@ public class Server extends Thread {
 			}
 		}
 		
+		/**
+		 * Espera informações do Cliente antes de iniciar a partida
+		 */
+		try {
+			Server.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		if(clientSockets.size() == 2) {
 			jogo = new Jogo(nomesJogadores.get(0), nomesJogadores.get(1));
 			sendToClients(INICIAR + "1");
