@@ -8,8 +8,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,12 +33,14 @@ public class Lobby extends JPanel {
 	private JButton btnConfirm;
 	private ButtonGroup radioGroup;
 	
+	public String jogadaArdversario = null;
+	public boolean adversarioJogou = false;
+	
 	public Lobby()
 	{	
 		try 
 		{
 			background = ImageIO.read(getClass().getResource(pathBackground));
-			paintComponent(background.getGraphics());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +54,7 @@ public class Lobby extends JPanel {
 		radioGroup = new ButtonGroup();
 		
 		JRadioButton btnTesoura = new JRadioButton(disabledArrow);
-		btnTesoura.setName("tesoura");
+		btnTesoura.setName("TESOURA");
 		btnTesoura.setSelected(true);
 		btnTesoura.setBackground(BACKGROUND_COLOR);
 		btnTesoura.setBounds(80, 350, 70, 64);
@@ -60,7 +64,7 @@ public class Lobby extends JPanel {
 		add(btnTesoura);
 		
 		JRadioButton btnPapel = new JRadioButton(disabledArrow);
-		btnPapel.setName("papel");
+		btnPapel.setName("PAPEL");
 		btnPapel.setBackground(BACKGROUND_COLOR);
 		btnPapel.setBounds(80, 530, 70, 64);
 		btnPapel.setSelectedIcon(selectedArrow);
@@ -69,7 +73,7 @@ public class Lobby extends JPanel {
 		add(btnPapel);
 		
 		JRadioButton btnPedra = new JRadioButton(disabledArrow);
-		btnPedra.setName("pedra");
+		btnPedra.setName("PEDRA");
 		btnPedra.setBackground(BACKGROUND_COLOR);
 		btnPedra.setBounds(80, 700, 70, 64);
 		btnPedra.setSelectedIcon(selectedArrow);
@@ -77,9 +81,9 @@ public class Lobby extends JPanel {
 		radioGroup.add(btnPedra);
 		add(btnPedra);
 		
-		JLabel label = new JLabel(new ImageIcon(getClass().getResource("/magnifier.gif")));
-		label.setBounds(470, 350, 200, 200);
-		add(label);
+		JLabel lblLupa = new JLabel(new ImageIcon(getClass().getResource("/magnifier.gif")));
+		lblLupa.setBounds(860, 400, 200, 200);
+		add(lblLupa);
 		
 		btnConfirm = new JButton("Confirmar");
 		btnConfirm.setFont(fredoka);
@@ -90,36 +94,69 @@ public class Lobby extends JPanel {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-	    super.paintComponent(g);
-	        g.drawImage(background, 0, 0, null);
-	        
-	        g.setColor(CUSTOMIZED_BLUE);
-	        g.setFont(fredoka.deriveFont((float) 16));
-	        
-	        //Alternar para "voce selecionou *jogada*"
-	        g.drawString("Selecione sua jogada clicando", 470, 650);
-	        g.drawString("sobre a seta correspondente!", 470, 665);
-	        
-	        g.setColor(CUSTOMIZED_BLUE);
-	        g.setFont(fredoka.deriveFont((float) 20));
-	        //ALternar para "*nome* escolheu sua jogada!"
-	        g.drawString("Aguardando jogada de *nome*", 435, 580);
+		super.paintComponent(g);
+		g.drawImage(background, 0, 0, null);
+		/**
+         * Esconde a jogada do outro jogador
+         */
+		if(jogadaArdversario == null || !jogadaArdversario.equalsIgnoreCase("TESOURA")) {
+			g.setColor(BACKGROUND_COLOR);
+			g.fillRect(850, 310, 170, 150);
+		}
+        
+		if(jogadaArdversario == null || !jogadaArdversario.equalsIgnoreCase("PAPEL")) {
+			g.setColor(BACKGROUND_COLOR);
+			g.fillRect(850, 480, 170, 150);
+		}
+		
+        if(jogadaArdversario == null || !jogadaArdversario.equalsIgnoreCase("PEDRA")) {
+        	g.setColor(BACKGROUND_COLOR);
+        	g.fillRect(850, 650, 170, 150);
+        }
+        
+        g.setColor(CUSTOMIZED_BLUE);
+   	 	g.setFont(fredoka.deriveFont((float) 20));
+        if(!adversarioJogou) {
+        	 //ALternar para "*nome* escolheu sua jogada!"
+        	 g.drawString("Aguardando jogada", 870, 620);
+        } else {
+        	g.drawString("Jogada Confirmada!", 870, 620);
+        }
+        
+        g.setColor(CUSTOMIZED_BLUE);
+        g.setFont(fredoka.deriveFont((float) 16));
+        
+        g.drawString("Selecione sua jogada clicando", 470, 650);
+        g.drawString("sobre a seta correspondente!", 470, 665);
 	}
 
 	public JButton getBtnConfirm() {
 		return btnConfirm;
 	}
 
-	public void setBtnConfirm(JButton BtnConfirm) {
-		this.btnConfirm = BtnConfirm;
+	public void setJogadaAdversario(String jogadaAdversario) {
+		this.jogadaArdversario = jogadaAdversario;
+		validate();
+		repaint();
 	}
+	
+	public void setAdversarioJogou(boolean adversarioJogou) {
+		this.adversarioJogou = adversarioJogou;
+		validate();
+		repaint();
+	}
+	
+	public String getJogada() {
+		String buttonName = null;
+		
+		for (Enumeration<AbstractButton> buttons = radioGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            button.setEnabled(false);
 
-	public ButtonGroup getRadioGroup() {
-		return radioGroup;
-	}
-
-	public void setRadioGroup(ButtonGroup radioGroup) {
-		this.radioGroup = radioGroup;
-	}
+            if (button.isSelected())
+                buttonName = button.getName();
+        }
+        return buttonName;
+	}		
 }
 

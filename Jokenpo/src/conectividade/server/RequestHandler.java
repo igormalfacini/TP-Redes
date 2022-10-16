@@ -1,8 +1,5 @@
 package conectividade.server;
 
-import static conectividade.Flag.NICKNAME;
-import static conectividade.Flag.STOP;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -1,6 +1,8 @@
 package main;
 
+import static conectividade.Flag.JOGADA;
 import static conectividade.Flag.NICKNAME;
+import static conectividade.Flag.STOP;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,7 +21,6 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import conectividade.Flag;
 import conectividade.client.Client;
 import conectividade.server.Server;
 import telas.CreateRoom;
@@ -87,6 +88,7 @@ public class Main extends JFrame {
 		 * A tela se inicia com o menu
 		 */
 		configureMenu();
+		//configureLobby();
 		
 		pack();
 		setLocationRelativeTo(null);
@@ -204,10 +206,21 @@ public class Main extends JFrame {
 	private void configureCreateRoomActionListeners(CreateRoom createRoom) {
 		createRoom.getBtnVoltar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				client.sendToServer(Flag.STOP + "1");
+				client.sendToServer(STOP + "1");
 				client.stopClient();
 
 				configureMenu();
+			}
+		});
+	}
+	
+	private void configureLobbyActionListeners(Lobby lobby) {
+		lobby.getBtnConfirm().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String jogada = lobby.getJogada();
+				lobby.getBtnConfirm().setEnabled(false);
+				lobby.getBtnConfirm().setText(jogada + "!");
+				client.sendToServer(JOGADA + jogada);
 			}
 		});
 	}
@@ -287,6 +300,9 @@ public class Main extends JFrame {
 		
 		Lobby lobby = new Lobby();
 		currentPanel = lobby;
+		configureLobbyActionListeners(lobby);
+		
+		
 		add(lobby);
 		validate();
 		repaint();		
