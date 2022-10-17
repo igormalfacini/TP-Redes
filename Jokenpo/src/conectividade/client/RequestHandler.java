@@ -49,15 +49,33 @@ public class RequestHandler extends Thread {
 					cliente.startLobby();
 				}
 				
-				if("STOP".equals(flag)) {
-					sendToServer("Encerrando Conex�o");
-					stop = true;
+				if("ADVERSARIOJOGOU".equals(flag)) {
+					cliente.setAdversarioJogou(value);
+				}
+				
+				if("PLACAR".equals(flag)) {
+					String[] placar = value.split("-");
+					cliente.setLobbyPlacar(placar);
+				}
+				
+				if("JOGADAS".equals(flag)) {
+					String[] jogadas = value.split("-");
+					cliente.setLobbyJogadas(jogadas);
+				}
+				
+				if("VENCEDOR".equals(flag)) {
+					cliente.setLobbyVencedorRound(value);
 				}
 				
 				if("VENCEDORFINAL".equals(flag)) {
-					if(value != null) {}
+					if(value != null) {
 						//TODO
-					//
+					}
+				}
+				
+				if("STOP".equals(flag)) {
+					sendToServer("Encerrando Conex�o");
+					stop = true;
 				}
 				
 			} while (!stop);

@@ -45,7 +45,11 @@ public class Jogo {
 			jogador2.setJogadaAtual(Jogada.getJogada(nomeJogada));
 		}
 		
-		if(!jogador1.getJogadaAtual().equals(null) || !jogador2.getJogadaAtual().equals(null)) {
+		/**
+		 * Se ambas as jogadas estiverem preenchidas, retorna "true" para q possa
+		 * ser verificado o vencedor 
+		 */
+		if(jogador1.getJogadaAtual() != null && jogador2.getJogadaAtual() != null) {
 			return true;
 		}
 		return false;

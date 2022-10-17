@@ -1,6 +1,7 @@
 package conectividade.server;
 
 import static conectividade.Flag.INICIAR;
+import static conectividade.Flag.PLACAR;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -54,7 +55,7 @@ public class Server extends Thread {
 					break;
 				}
 				
-				System.out.println("Aguardando conexï¿½o");
+				System.out.println("Aguardando conexão");
 
 				Socket cliente = serverSocket.accept();
 				clientSockets.add(cliente);
@@ -75,7 +76,7 @@ public class Server extends Thread {
 		}
 		
 		/**
-		 * Espera informaï¿½ï¿½es do Cliente antes de iniciar a partida
+		 * Espera informações do Cliente antes de iniciar a partida
 		 */
 		try {
 			Server.sleep(500);
@@ -83,15 +84,20 @@ public class Server extends Thread {
 			e.printStackTrace();
 		}
 		
+		/**
+		 * Se existem dois clientes conectados, iniciar partida
+		 */
 		if(clientSockets.size() == 2) {
 			jogo = new Jogo(nomesJogadores.get(0), nomesJogadores.get(1));
 			sendToClients(INICIAR + "1");
+			sendToClients(PLACAR + getPlacar());
+			
 		}
 	}
 
 	public boolean startServer() {
 		try {
-			System.out.println("Iniciando Servidor no endereï¿½o " 
+			System.out.println("Iniciando Servidor no endereço " 
 						+ InetAddress.getByAddress(address).getHostAddress() + ":" + port + "...");
 			serverSocket = new ServerSocket(port);
 			
@@ -138,6 +144,18 @@ public class Server extends Thread {
 	
 	public Jogo getJogo() {
 		return jogo;
+	}
+	
+	public String getPlacar() {
+		Jogador j1 = jogo.getJogador1();
+		Jogador j2 = jogo.getJogador2();
+		return (j1.getNome() + "-" + j1.getVitorias() + "-" + j2.getNome() + "-" + j2.getVitorias());
+	}
+	
+	public String getJogadas() {
+		Jogador j1 = jogo.getJogador1();
+		Jogador j2 = jogo.getJogador2();
+		return (j1.getJogadaAtual().getNome() + "-" + j2.getJogadaAtual().getNome());
 	}
 
 	public void setJogo(Jogo jogo) {

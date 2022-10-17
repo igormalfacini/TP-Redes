@@ -14,6 +14,10 @@ public enum Jogada {
         this.ganhaDe = ganhaDe;
     }
 
+    public String getNome() {
+    	return this.nome;
+    }
+    
 	public boolean ganhaDe(Jogada jogada) {
 		return this.ganhaDe.equals(jogada.nome);
 	}

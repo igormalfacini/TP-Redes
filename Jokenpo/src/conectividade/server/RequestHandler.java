@@ -1,12 +1,16 @@
 package conectividade.server;
 
+import static conectividade.Flag.ADVERSARIOJOGOU;
+import static conectividade.Flag.JOGADAS;
+import static conectividade.Flag.PLACAR;
+import static conectividade.Flag.VENCEDOR;
+import static conectividade.Flag.VENCEDORFINAL;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-import conectividade.Flag;
 
 /**
  * Classe respons�vel por receber e enviar mensagens entre o Servidor e os Clientes
@@ -59,11 +63,14 @@ public class RequestHandler extends Thread {
 				if("JOGADA".equals(flag)) {
 					String name = line[2];
 					boolean fazerJogada = server.getJogo().armazenaJogada(name, value);
+					server.sendToClients(ADVERSARIOJOGOU + name);
 					
 					if(fazerJogada) { 
 						String nomeVencedor = server.getJogo().fazJogada();
-						server.sendToClients(Flag.VENCEDOR + nomeVencedor);
-						server.sendToClients(Flag.VENCEDORFINAL + server.getJogo().verificaFim());
+						server.sendToClients(JOGADAS + server.getJogadas());
+						server.sendToClients(VENCEDOR + nomeVencedor);
+						server.sendToClients(VENCEDORFINAL + server.getJogo().verificaFim());
+						server.sendToClients(PLACAR + server.getPlacar());
 					}
 				}
 				

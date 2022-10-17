@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import conectividade.client.Client;
 import conectividade.server.Server;
 import telas.CreateRoom;
+import telas.FimJogo;
 import telas.JoinRoom;
 import telas.Lobby;
 import telas.Menu;
@@ -45,7 +46,7 @@ public class Main extends JFrame {
 	private static Main mainWindow;
 	
 	/**
-	 * Estilizaï¿½ï¿½o
+	 * Estilizacao
 	 */
 	public static final Color CUSTOMIZED_BLUE = new Color(119, 179, 214);
 	public static final Color BACKGROUND_COLOR = new Color(255, 245, 203);
@@ -55,6 +56,7 @@ public class Main extends JFrame {
 	 * Panels
 	 */
 	public JPanel currentPanel = null;
+	public Lobby lobby;
 	
 	/**
 	 * Conectividade
@@ -69,19 +71,19 @@ public class Main extends JFrame {
 	/*
 	 * Nome Jogador
 	 */
-	private String nomeJogador;
+	public String nomeJogador;
 	
 	public void initComponents()
 	{
 		/**
-		 * Inicializaï¿½ï¿½o da tela
+		 * Inicializacao da tela
 		 */
 		configureFont();
 		
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		getContentPane().setLayout(new FlowLayout(0, 0, 0));
 		
-		setTitle("Jokenpï¿½!");
+		setTitle("Jokenpô!");
 		setResizable(false);
 		
 		/**
@@ -115,7 +117,7 @@ public class Main extends JFrame {
 	}
 	
 	/**
-	 * Configuraï¿½ï¿½o de Action Listeners
+	 * Configuracao de Action Listeners
 	 */
 	
 	private void configureMenuActionListeners(Menu menu) {
@@ -225,6 +227,20 @@ public class Main extends JFrame {
 		});
 	}
 	
+	private void configureFimJogoActionListeners(FimJogo fimJogo) {
+		fimJogo.getBtnVoltar().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				client.sendToServer(STOP + "1");
+				client.stopClient();
+
+				if(hasServer){
+					server.stopServer();
+				}
+				configureMenu();
+			}
+		});
+	}
+	
 	private byte[] convertStringToAddress(String ip) {
 		String[] addressString = ip.split("\\.");
 		int tam = addressString.length;
@@ -255,7 +271,7 @@ public class Main extends JFrame {
 	}
 	
 	/**
-	 * Configuraï¿½ï¿½o dos Panels
+	 * Configuracao dos Panels
 	 */
 	
 	public void configureMenu() {
@@ -298,7 +314,7 @@ public class Main extends JFrame {
 		if(currentPanel != null)
 			remove(currentPanel);
 		
-		Lobby lobby = new Lobby();
+		lobby = new Lobby();
 		currentPanel = lobby;
 		configureLobbyActionListeners(lobby);
 		
@@ -306,6 +322,19 @@ public class Main extends JFrame {
 		add(lobby);
 		validate();
 		repaint();		
+	}
+	
+	public void configureFimJogo(String nomeVencedor) {
+		if(currentPanel != null)
+			remove(currentPanel);
+		
+		FimJogo fimJogo = new FimJogo(nomeVencedor);
+		currentPanel = fimJogo;
+		configureFimJogoActionListeners(fimJogo);
+		
+		add(fimJogo);
+		validate();
+		repaint();
 	}
 	
 	public static void main(String[] args) {

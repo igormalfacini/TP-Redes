@@ -8,7 +8,7 @@ public class Jogador {
 
 	public Jogador(String nome) {
 		vitorias = 0;
-		nome = this.nome;
+		this.nome = nome;
 	}
 	
 	public String getNome() {

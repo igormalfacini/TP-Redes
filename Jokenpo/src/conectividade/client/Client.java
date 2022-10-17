@@ -73,4 +73,24 @@ public class Client {
 	public void startLobby() {
 		mainWindow.configureLobby();
 	}
+	
+	public void setAdversarioJogou(String nomeJogador) {
+		mainWindow.lobby.setAdversarioJogou(!nomeJogador.equals(mainWindow.nomeJogador));
+	}
+	
+	public void setLobbyPlacar(String[] placar){
+		mainWindow.lobby.setPlacar(placar);
+	}
+	
+	public void setLobbyJogadas(String[] jogadas){
+		mainWindow.lobby.setJogadas(jogadas);
+	}
+	
+	public void setLobbyVencedorRound(String nomeVencedor){
+		mainWindow.lobby.setNomeVencedorRound(nomeVencedor);
+	}
+	
+	public void showFimJogo(String nomeVencedor) {
+		mainWindow.configureFimJogo(nomeVencedor);
+	}
 }

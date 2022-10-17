@@ -27,14 +27,21 @@ public class Lobby extends JPanel {
 	
 	private BufferedImage background;
 	private String pathBackground = "/background-lobby.png";
+	
 	private ImageIcon selectedArrow = new ImageIcon("res/selected-arrow-right.png");
 	private ImageIcon disabledArrow = new ImageIcon("res/disabled-arrow-right.png");
+	
+	private JLabel lblLupa;
 
 	private JButton btnConfirm;
 	private ButtonGroup radioGroup;
 	
-	public String jogadaArdversario = null;
-	public boolean adversarioJogou = false;
+	private String jogadaArdversario = null;
+	private boolean adversarioJogou = false;
+	private boolean fimRound = false;
+	private String nomeVencedor = null;
+	
+	private String[] placar;
 	
 	public Lobby()
 	{	
@@ -81,7 +88,7 @@ public class Lobby extends JPanel {
 		radioGroup.add(btnPedra);
 		add(btnPedra);
 		
-		JLabel lblLupa = new JLabel(new ImageIcon(getClass().getResource("/magnifier.gif")));
+		lblLupa = new JLabel(new ImageIcon(getClass().getResource("/magnifier.gif")));
 		lblLupa.setBounds(860, 400, 200, 200);
 		add(lblLupa);
 		
@@ -114,34 +121,87 @@ public class Lobby extends JPanel {
         	g.fillRect(850, 650, 170, 150);
         }
         
+        /**
+         * Placar
+         */
+        //TODO Placar redimensionável
+        g.setColor(CUSTOMIZED_BLUE);
+   	 	g.setFont(fredoka.deriveFont((float) 30));
+   	 	g.drawString(placar[0], 340, 250);
+	 	g.drawString(placar[1], 550, 250);
+	 	g.drawString("X", 595, 250);
+	 	g.drawString(placar[3], 640, 250);
+	 	g.drawString(placar[2], 680, 250);
+        
         g.setColor(CUSTOMIZED_BLUE);
    	 	g.setFont(fredoka.deriveFont((float) 20));
         if(!adversarioJogou) {
         	 //ALternar para "*nome* escolheu sua jogada!"
         	 g.drawString("Aguardando jogada", 870, 620);
+        	 g.drawString("   adversária", 870, 640);
         } else {
-        	g.drawString("Jogada Confirmada!", 870, 620);
+        	g.drawString("Jogada Confirmada!", 870, 520);
         }
         
-        g.setColor(CUSTOMIZED_BLUE);
-        g.setFont(fredoka.deriveFont((float) 16));
-        
-        g.drawString("Selecione sua jogada clicando", 470, 650);
-        g.drawString("sobre a seta correspondente!", 470, 665);
+        if(!fimRound) {
+        	g.setColor(CUSTOMIZED_BLUE);
+            g.setFont(fredoka.deriveFont((float) 16));
+             
+        	g.drawString("Selecione sua jogada clicando", 470, 650);
+        	g.drawString("sobre a seta correspondente!", 470, 665);        	
+        }
+        else {
+        	if(nomeVencedor == null){
+        		g.setColor(CUSTOMIZED_BLUE);
+                g.setFont(fredoka.deriveFont((float) 50));
+                 
+            	g.drawString("Empate!", 500, 500);
+        	}
+        	
+        	else {
+        		g.setColor(CUSTOMIZED_BLUE);
+                g.setFont(fredoka.deriveFont((float) 40));
+                 
+            	g.drawString(nomeVencedor + " é o vencedor!", 340, 500);
+        	}
+        }
 	}
 
 	public JButton getBtnConfirm() {
 		return btnConfirm;
 	}
 
-	public void setJogadaAdversario(String jogadaAdversario) {
-		this.jogadaArdversario = jogadaAdversario;
+	public void setJogadas(String[] jogadas) {
+		this.jogadaArdversario = (getJogada().equals(jogadas[0])) ? (jogadas[1]) : (jogadas[0]);
 		validate();
 		repaint();
 	}
 	
 	public void setAdversarioJogou(boolean adversarioJogou) {
+		if(this.adversarioJogou)
+			return;
+		
 		this.adversarioJogou = adversarioJogou;
+		lblLupa.setVisible(false); //TODO Lupa sumindo nas duas telas
+		validate();
+		repaint();
+	}
+	
+	public void setFimRound(boolean fimRound) {
+		this.fimRound = fimRound;
+		validate();
+		repaint();
+	}
+	
+	public void setPlacar(String[] placar) {
+		this.placar = placar;
+		validate();
+		repaint();
+	}
+	
+	public void setNomeVencedorRound(String nomeVencedor) {
+		fimRound = true;
+		this.nomeVencedor = nomeVencedor;
 		validate();
 		repaint();
 	}
