@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import jokenpo.Jogador;
 import jokenpo.Jogo;
 
 public class Server extends Thread {
@@ -53,7 +54,7 @@ public class Server extends Thread {
 					break;
 				}
 				
-				System.out.println("Aguardando conexão");
+				System.out.println("Aguardando conexï¿½o");
 
 				Socket cliente = serverSocket.accept();
 				clientSockets.add(cliente);
@@ -74,7 +75,7 @@ public class Server extends Thread {
 		}
 		
 		/**
-		 * Espera informações do Cliente antes de iniciar a partida
+		 * Espera informaï¿½ï¿½es do Cliente antes de iniciar a partida
 		 */
 		try {
 			Server.sleep(500);
@@ -90,7 +91,7 @@ public class Server extends Thread {
 
 	public boolean startServer() {
 		try {
-			System.out.println("Iniciando Servidor no endereço " 
+			System.out.println("Iniciando Servidor no endereï¿½o " 
 						+ InetAddress.getByAddress(address).getHostAddress() + ":" + port + "...");
 			serverSocket = new ServerSocket(port);
 			
@@ -133,5 +134,13 @@ public class Server extends Thread {
 	}
 	public ArrayList<String> getNomesJogadores() {
 		return nomesJogadores;
+	}
+	
+	public Jogo getJogo() {
+		return jogo;
+	}
+
+	public void setJogo(Jogo jogo) {
+		this.jogo = jogo;
 	}
 }

@@ -7,4 +7,5 @@ public class Flag {
 	public static String JOGADA = "JOGADA:";
 	public static String VENCEDOR = "VENCEDOR:";
 	public static String STOP = "STOP:";
+	public static String VENCEDORFINAL = "VENCEDORFINAL:";
 }

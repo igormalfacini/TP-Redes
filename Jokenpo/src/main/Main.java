@@ -45,7 +45,7 @@ public class Main extends JFrame {
 	private static Main mainWindow;
 	
 	/**
-	 * Estilização
+	 * Estilizaï¿½ï¿½o
 	 */
 	public static final Color CUSTOMIZED_BLUE = new Color(119, 179, 214);
 	public static final Color BACKGROUND_COLOR = new Color(255, 245, 203);
@@ -74,14 +74,14 @@ public class Main extends JFrame {
 	public void initComponents()
 	{
 		/**
-		 * Inicialização da tela
+		 * Inicializaï¿½ï¿½o da tela
 		 */
 		configureFont();
 		
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		getContentPane().setLayout(new FlowLayout(0, 0, 0));
 		
-		setTitle("Jokenpô!");
+		setTitle("Jokenpï¿½!");
 		setResizable(false);
 		
 		/**
@@ -115,7 +115,7 @@ public class Main extends JFrame {
 	}
 	
 	/**
-	 * Configuração de Action Listeners
+	 * Configuraï¿½ï¿½o de Action Listeners
 	 */
 	
 	private void configureMenuActionListeners(Menu menu) {
@@ -220,7 +220,7 @@ public class Main extends JFrame {
 				String jogada = lobby.getJogada();
 				lobby.getBtnConfirm().setEnabled(false);
 				lobby.getBtnConfirm().setText(jogada + "!");
-				client.sendToServer(JOGADA + jogada);
+				client.sendToServer(JOGADA + jogada + ":" + nomeJogador);
 			}
 		});
 	}
@@ -255,7 +255,7 @@ public class Main extends JFrame {
 	}
 	
 	/**
-	 * Configuração dos Panels
+	 * Configuraï¿½ï¿½o dos Panels
 	 */
 	
 	public void configureMenu() {

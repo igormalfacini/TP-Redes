@@ -17,4 +17,14 @@ public enum Jogada {
 	public boolean ganhaDe(Jogada jogada) {
 		return this.ganhaDe.equals(jogada.nome);
 	}
+	
+	public static Jogada getJogada(String jogada) {
+		if(jogada.equals(PAPEL.nome)) 
+			return PAPEL;
+		if(jogada.equals(TESOURA.nome))
+			return TESOURA;
+		if(jogada.equals(PEDRA.nome))
+			return PEDRA;
+		return null;
+	}
 }

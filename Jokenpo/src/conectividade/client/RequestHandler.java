@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- * Classe responsável por receber e enviar mensagens entre Cliente e o Servidor
+ * Classe responsï¿½vel por receber e enviar mensagens entre Cliente e o Servidor
  */
 public class RequestHandler extends Thread {
 	private Socket socket;
@@ -50,8 +50,14 @@ public class RequestHandler extends Thread {
 				}
 				
 				if("STOP".equals(flag)) {
-					sendToServer("Encerrando Conexão");
+					sendToServer("Encerrando Conexï¿½o");
 					stop = true;
+				}
+				
+				if("VENCEDORFINAL".equals(flag)) {
+					if(value != null) {}
+						//TODO
+					//
 				}
 				
 			} while (!stop);

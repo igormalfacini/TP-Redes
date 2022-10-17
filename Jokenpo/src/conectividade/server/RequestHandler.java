@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import conectividade.Flag;
+
 /**
- * Classe responsável por receber e enviar mensagens entre o Servidor e os Clientes
+ * Classe responsï¿½vel por receber e enviar mensagens entre o Servidor e os Clientes
  */
 public class RequestHandler extends Thread {
 	private Socket socket;
@@ -52,6 +54,17 @@ public class RequestHandler extends Thread {
 				if("STOP".equals(flag)) {
 					stop = true;
 					server.stopServer();
+				}
+				
+				if("JOGADA".equals(flag)) {
+					String name = line[2];
+					boolean fazerJogada = server.getJogo().armazenaJogada(name, value);
+					
+					if(fazerJogada) { 
+						String nomeVencedor = server.getJogo().fazJogada();
+						server.sendToClients(Flag.VENCEDOR + nomeVencedor);
+						server.sendToClients(Flag.VENCEDORFINAL + server.getJogo().verificaFim());
+					}
 				}
 				
 			} while (!stop);

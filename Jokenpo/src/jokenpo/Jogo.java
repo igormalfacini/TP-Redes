@@ -4,6 +4,7 @@ public class Jogo {
 	private Jogador jogador1, jogador2;
 	private int roundAtual = 1;
 	
+	
 	public Jogo() {}
 	
 	public Jogo(String nickJogador1, String nickJogador2) {
@@ -17,16 +18,16 @@ public class Jogo {
 	 * @param jogada2 - jogada realizada pelo jogador 2
 	 * @return String - nome do jogador vencedor.
 	 */
-	public String fazJogada(Jogada jogada1, Jogada jogada2) {
-		if(jogada1.ganhaDe(jogada2)) {
+	public String fazJogada() {
+		if(jogador1.getJogadaAtual().ganhaDe(jogador2.getJogadaAtual())) {
 			roundAtual = getRoundAtual() + 1;
 			jogador1.setVitorias(jogador1.getVitorias()+1);
 			return jogador1.getNome();
 		}
 
-		if(jogada2.ganhaDe(jogada1)) {
+		if(jogador2.getJogadaAtual().ganhaDe(jogador1.getJogadaAtual())) {
 			roundAtual = getRoundAtual() + 1;
-			jogador1.setVitorias(jogador1.getVitorias()+1);
+			jogador2.setVitorias(jogador2.getVitorias()+1);
 			return jogador2.getNome();
 		}
 		
@@ -34,15 +35,33 @@ public class Jogo {
 		 * Empate
 		 */
 		return null;
-		//verificaFim();
 	}
 	
-	void verificaFim(){
-		if(jogador1.getVitorias() >= 3) {
-			//Jogador1 Ganha
-		}else if(jogador2.getVitorias() >= 3) {
-			//Jogador1 Ganha
+	public boolean armazenaJogada(String nome, String nomeJogada) {
+		if(nome.equals(jogador1.getNome())) {
+			jogador1.setJogadaAtual(Jogada.getJogada(nomeJogada));
 		}
+		else if(nome.equals(jogador2.getNome())) {
+			jogador2.setJogadaAtual(Jogada.getJogada(nomeJogada));
+		}
+		
+		if(!jogador1.getJogadaAtual().equals(null) || !jogador2.getJogadaAtual().equals(null)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public String verificaFim(){
+		if(roundAtual == 5) {
+			if(jogador1.getVitorias() > jogador2.getVitorias()) {
+				return jogador1.getNome();
+			}else if(jogador1.getVitorias() < jogador2.getVitorias()) {
+				return jogador2.getNome();
+			}else {
+				return "Empate";
+			}
+		}
+		return null;
 	}
 
 	public int getRoundAtual() {
