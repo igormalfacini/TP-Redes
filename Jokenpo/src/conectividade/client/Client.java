@@ -90,7 +90,15 @@ public class Client {
 		mainWindow.lobby.setNomeVencedorRound(nomeVencedor);
 	}
 	
+	public void lobbyNextRound() {
+		mainWindow.lobby.nextRound();
+	}
+	
 	public void showFimJogo(String nomeVencedor) {
 		mainWindow.configureFimJogo(nomeVencedor);
+	}
+	
+	public void setFimJogoPlacar(String[] placar){
+		mainWindow.fimJogo.setPlacar(placar);
 	}
 }

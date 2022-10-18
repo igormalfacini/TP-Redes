@@ -58,6 +58,11 @@ public class RequestHandler extends Thread {
 					cliente.setLobbyPlacar(placar);
 				}
 				
+				if("PLACARFINAL".equals(flag)) {
+					String[] placar = value.split("-");
+					cliente.setFimJogoPlacar(placar);
+				}
+				
 				if("JOGADAS".equals(flag)) {
 					String[] jogadas = value.split("-");
 					cliente.setLobbyJogadas(jogadas);
@@ -68,9 +73,13 @@ public class RequestHandler extends Thread {
 				}
 				
 				if("VENCEDORFINAL".equals(flag)) {
-					if(value != null) {
-						//TODO
+					if(value == null || value.equalsIgnoreCase("null")) {
+						cliente.lobbyNextRound();
 					}
+					else {
+						cliente.showFimJogo(value);
+					}
+						
 				}
 				
 				if("STOP".equals(flag)) {

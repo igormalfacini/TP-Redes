@@ -149,7 +149,7 @@ public class Server extends Thread {
 	public String getPlacar() {
 		Jogador j1 = jogo.getJogador1();
 		Jogador j2 = jogo.getJogador2();
-		return (j1.getNome() + "-" + j1.getVitorias() + "-" + j2.getNome() + "-" + j2.getVitorias());
+		return (j1.getNome() + "-" + j1.getVitorias() + "-" + j2.getNome() + "-" + j2.getVitorias() + "-" + jogo.getRoundAtual());
 	}
 	
 	public String getJogadas() {
@@ -157,7 +157,14 @@ public class Server extends Thread {
 		Jogador j2 = jogo.getJogador2();
 		return (j1.getJogadaAtual().getNome() + "-" + j2.getJogadaAtual().getNome());
 	}
-
+	
+	public void resetarJogadas() {
+		Jogador j1 = jogo.getJogador1();
+		Jogador j2 = jogo.getJogador2();
+		
+		j1.setJogadaAtual(null);
+		j2.setJogadaAtual(null);
+	}
 	public void setJogo(Jogo jogo) {
 		this.jogo = jogo;
 	}

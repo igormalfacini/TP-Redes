@@ -34,6 +34,7 @@ public class Jogo {
 		/**
 		 * Empate
 		 */
+		roundAtual = getRoundAtual() + 1;
 		return null;
 	}
 	
@@ -56,7 +57,7 @@ public class Jogo {
 	}
 	
 	public String verificaFim(){
-		if(roundAtual == 5) {
+		if(roundAtual > 5) {
 			if(jogador1.getVitorias() > jogador2.getVitorias()) {
 				return jogador1.getNome();
 			}else if(jogador1.getVitorias() < jogador2.getVitorias()) {

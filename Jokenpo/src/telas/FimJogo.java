@@ -23,6 +23,7 @@ public class FimJogo extends JPanel {
 	private JButton btnVoltar;
 	
 	private String nomeVencedor;
+	private String[] placar;
 
 	public FimJogo(String nomeVencedor)
 	{	
@@ -42,7 +43,7 @@ public class FimJogo extends JPanel {
 		btnVoltar = new JButton("Voltar ao Menu Principal");
 		btnVoltar.setFont(fredoka);
 		btnVoltar.setBackground(CUSTOMIZED_BLUE);
-		btnVoltar.setBounds(500, 650, 200, 40);
+		btnVoltar.setBounds(360, 650, 500, 40);
 		add(btnVoltar);
 	}
 	
@@ -53,11 +54,33 @@ public class FimJogo extends JPanel {
 	        
 	        g.setColor(CUSTOMIZED_BLUE);
 	        g.setFont(fredoka);
-	        g.drawString("Informe o Código da Sala", 430, 480);
+	        g.setFont(fredoka.deriveFont((float) 40));
+	        g.drawString(nomeVencedor + " venceu o jogo!", 350, 460);
+	        
+	        /**
+	         * Placar
+	         */
+	        //TODO Placar redimensionável
+	   	 	g.setFont(fredoka.deriveFont((float) 45));
+	   	 	
+	   	 	if(placar == null) return;
+	   	 	
+	   	 	g.setFont(fredoka.deriveFont((float) 30));
+	   	 	g.drawString(placar[0], 340, 510);
+		 	g.drawString(placar[1], 550, 510);
+		 	g.drawString("X", 595, 510);
+		 	g.drawString(placar[3], 640, 510);
+		 	g.drawString(placar[2], 680, 510);
 	}
 	
 	public JButton getBtnVoltar() {
 		return btnVoltar;
+	}
+	
+	public void setPlacar(String[] placar) {
+		this.placar = placar;
+		validate();
+		repaint();
 	}
 }
 

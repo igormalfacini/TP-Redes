@@ -3,6 +3,7 @@ package conectividade.server;
 import static conectividade.Flag.ADVERSARIOJOGOU;
 import static conectividade.Flag.JOGADAS;
 import static conectividade.Flag.PLACAR;
+import static conectividade.Flag.PLACARFINAL;
 import static conectividade.Flag.VENCEDOR;
 import static conectividade.Flag.VENCEDORFINAL;
 
@@ -69,8 +70,21 @@ public class RequestHandler extends Thread {
 						String nomeVencedor = server.getJogo().fazJogada();
 						server.sendToClients(JOGADAS + server.getJogadas());
 						server.sendToClients(VENCEDOR + nomeVencedor);
-						server.sendToClients(VENCEDORFINAL + server.getJogo().verificaFim());
+						server.resetarJogadas();
+						
+						/**
+						 * Tempo dos jogadores verem o resultado
+						 */
+						RequestHandler.sleep(5000);
+						
+						/**
+						 * Verifica se o Jogo chegou ao fim
+						 */
 						server.sendToClients(PLACAR + server.getPlacar());
+						String vencedorFinal = server.getJogo().verificaFim();
+						server.sendToClients(VENCEDORFINAL + vencedorFinal);
+						if(vencedorFinal != null)
+							server.sendToClients(PLACARFINAL + server.getPlacar());
 					}
 				}
 				

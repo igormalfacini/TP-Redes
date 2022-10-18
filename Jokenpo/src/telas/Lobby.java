@@ -121,48 +121,56 @@ public class Lobby extends JPanel {
         	g.fillRect(850, 650, 170, 150);
         }
         
+        
+        g.setColor(CUSTOMIZED_BLUE);
         /**
          * Placar
          */
         //TODO Placar redimensionável
-        g.setColor(CUSTOMIZED_BLUE);
+   	 	g.setFont(fredoka.deriveFont((float) 45));
+   	 	g.drawString("Round " + placar[4], 510, 200);
+   	 	
    	 	g.setFont(fredoka.deriveFont((float) 30));
-   	 	g.drawString(placar[0], 340, 250);
-	 	g.drawString(placar[1], 550, 250);
-	 	g.drawString("X", 595, 250);
-	 	g.drawString(placar[3], 640, 250);
-	 	g.drawString(placar[2], 680, 250);
+   	 	g.drawString(placar[0], 340, 260);
+	 	g.drawString(placar[1], 550, 260);
+	 	g.drawString("X", 595, 260);
+	 	g.drawString(placar[3], 640, 260);
+	 	g.drawString(placar[2], 680, 260);
         
-        g.setColor(CUSTOMIZED_BLUE);
-   	 	g.setFont(fredoka.deriveFont((float) 20));
-        if(!adversarioJogou) {
-        	 //ALternar para "*nome* escolheu sua jogada!"
-        	 g.drawString("Aguardando jogada", 870, 620);
-        	 g.drawString("   adversária", 870, 640);
-        } else {
-        	g.drawString("Jogada Confirmada!", 870, 520);
-        }
-        
+   	 	/**
+   	 	 * Informações que somente aparecem enquanto o round está sendo jogado
+   	 	 */
         if(!fimRound) {
-        	g.setColor(CUSTOMIZED_BLUE);
             g.setFont(fredoka.deriveFont((float) 16));
              
         	g.drawString("Selecione sua jogada clicando", 470, 650);
-        	g.drawString("sobre a seta correspondente!", 470, 665);        	
+        	g.drawString("sobre a seta correspondente!", 470, 665);   
+        	
+       	 	g.setFont(fredoka.deriveFont((float) 20));
+       	 	
+        	if(!adversarioJogou) {
+				g.drawString("Aguardando jogada", 870, 620);
+				g.drawString("adversária", 920, 640);
+           } else {
+           		g.drawString("Jogada Confirmada!", 870, 520);
+           }
         }
+        /**
+         * Fim do round
+         */
         else {
-        	if(nomeVencedor == null){
+        	if(nomeVencedor == null || nomeVencedor.equalsIgnoreCase(null)){
         		g.setColor(CUSTOMIZED_BLUE);
                 g.setFont(fredoka.deriveFont((float) 50));
                  
-            	g.drawString("Empate!", 500, 500);
+            	g.drawString("Empate!", 500, 500); //TODO nao funciona
         	}
         	
         	else {
         		g.setColor(CUSTOMIZED_BLUE);
                 g.setFont(fredoka.deriveFont((float) 40));
                  
-            	g.drawString(nomeVencedor + " é o vencedor!", 340, 500);
+            	g.drawString(nomeVencedor + " venceu o round!", 340, 500);
         	}
         }
 	}
@@ -182,13 +190,8 @@ public class Lobby extends JPanel {
 			return;
 		
 		this.adversarioJogou = adversarioJogou;
-		lblLupa.setVisible(false); //TODO Lupa sumindo nas duas telas
-		validate();
-		repaint();
-	}
-	
-	public void setFimRound(boolean fimRound) {
-		this.fimRound = fimRound;
+		if(adversarioJogou)
+			lblLupa.setVisible(false);
 		validate();
 		repaint();
 	}
@@ -201,7 +204,32 @@ public class Lobby extends JPanel {
 	
 	public void setNomeVencedorRound(String nomeVencedor) {
 		fimRound = true;
+		btnConfirm.setVisible(false);
 		this.nomeVencedor = nomeVencedor;
+		validate();
+		repaint();
+	}
+	
+	public void nextRound() {
+		/**
+		 * Refaz todas as configurações iniciais
+		 */
+		jogadaArdversario = null;
+		adversarioJogou = false;
+		fimRound = false;
+		nomeVencedor = null;
+		
+		lblLupa.setVisible(true);
+		
+		btnConfirm.setText("Confirmar");
+		btnConfirm.setEnabled(true);
+		btnConfirm.setVisible(true);
+		
+		for (Enumeration<AbstractButton> buttons = radioGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            button.setEnabled(true);
+        }
+		
 		validate();
 		repaint();
 	}

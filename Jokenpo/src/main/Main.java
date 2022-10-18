@@ -55,8 +55,9 @@ public class Main extends JFrame {
 	/**
 	 * Panels
 	 */
-	public JPanel currentPanel = null;
+	private JPanel currentPanel = null;
 	public Lobby lobby;
+	public FimJogo fimJogo;
 	
 	/**
 	 * Conectividade
@@ -328,7 +329,7 @@ public class Main extends JFrame {
 		if(currentPanel != null)
 			remove(currentPanel);
 		
-		FimJogo fimJogo = new FimJogo(nomeVencedor);
+		fimJogo = new FimJogo(nomeVencedor);
 		currentPanel = fimJogo;
 		configureFimJogoActionListeners(fimJogo);
 		
