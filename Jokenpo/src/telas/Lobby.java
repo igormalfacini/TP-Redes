@@ -34,7 +34,6 @@ public class Lobby extends JPanel {
 	
 	private JLabel lblLupa;
 	private JLabel lblPlacar;
-	private JLabel lblVencedor;
 
 	private JButton btnConfirm;
 	private ButtonGroup radioGroup;
@@ -164,19 +163,15 @@ public class Lobby extends JPanel {
          * Fim do round
          */
         else {
-        	 lblVencedor = new JLabel("<html><p> " + nomeVencedor + " venceu o round! </p> </html>", SwingConstants.CENTER);
-             lblVencedor.setFont(fredoka.deriveFont((float) 35));
-             lblVencedor.setForeground(CUSTOMIZED_BLUE);
-             lblVencedor.setBounds(400, 500, 400, 100);
-            
-             if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("null")){
-     	   	 	add(lblVencedor);
-         	}
-         	
-         	else {
-                 lblVencedor.setText("Empate!");
-                 add(lblVencedor);
-         	}
+        	
+        	if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("null")){
+                g.setFont(fredoka.deriveFont((float) 40));
+                g.drawString(nomeVencedor, 430, 550);
+            	g.drawString("venceu o round!", 450, 600);
+        	} else {
+        		g.setFont(fredoka.deriveFont((float) 50));
+            	g.drawString("Empate!", 500, 500);
+        	}
         }
 	}
 
@@ -225,7 +220,6 @@ public class Lobby extends JPanel {
 		nomeVencedor = null;
 		
 		lblLupa.setVisible(true);
-		remove(lblVencedor);
 		
 		btnConfirm.setText("Confirmar");
 		btnConfirm.setEnabled(true);

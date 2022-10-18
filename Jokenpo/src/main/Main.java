@@ -94,7 +94,7 @@ public class Main extends JFrame {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		getContentPane().setLayout(new FlowLayout(0, 0, 0));
 		
-		setTitle("JokenpÃ´!");
+		setTitle("Jokenpô!");
 		setResizable(false);
 		
 		/**

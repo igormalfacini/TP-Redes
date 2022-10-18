@@ -63,7 +63,7 @@ public class FimJogo extends JPanel {
 	    super.paintComponent(g);
 	        g.drawImage(background, 0, 0, null);
 	        
-            lblVencedor = new JLabel(nomeVencedor, SwingConstants.CENTER);
+            lblVencedor = new JLabel(nomeVencedor + " venceu o jogo!", SwingConstants.CENTER);
             lblVencedor.setFont(fredoka.deriveFont((float) 40));
             lblVencedor.setForeground(CUSTOMIZED_BLUE);
             lblVencedor.setBounds(0, 460, 1200, 40);
