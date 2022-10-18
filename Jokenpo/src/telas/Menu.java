@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import main.Main;
+import jokenpo.Sound;
 
 
 public class Menu extends JPanel {
@@ -28,6 +29,8 @@ public class Menu extends JPanel {
 	private JButton btnJoin;
 	private JButton btnCreateRoom;
 	private JButton btnExit;
+	private JButton btnMute;
+	Sound som = new Sound();
 
 	public Menu()
 	{	
@@ -64,6 +67,8 @@ public class Menu extends JPanel {
 		btnExit.setBackground(CUSTOMIZED_BLUE);
 		btnExit.setBounds(500, 700, 200, 40);
 		add(btnExit);
+	
+		som.sound("res/start.wav");
 	}
 	
 	@Override
@@ -110,5 +115,13 @@ public class Menu extends JPanel {
 
 	public void setBtnExit(JButton btnExit) {
 		this.btnExit = btnExit;
+	}
+	
+	public JButton getBtnMute() {
+		return btnMute;
+	}
+
+	public void setBtnMute(JButton btnMute) {
+		this.btnMute = btnMute;
 	}
 }

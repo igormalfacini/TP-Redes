@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import jokenpo.Sound;
 import main.Main;
 
 public class FimJogo extends JPanel {
@@ -24,6 +25,12 @@ public class FimJogo extends JPanel {
 	
 	private String nomeVencedor;
 	private String[] placar;
+	
+	/**
+	 * Som
+	 * 
+	 */
+	Sound som = new Sound();
 
 	public FimJogo(String nomeVencedor)
 	{	
@@ -56,6 +63,7 @@ public class FimJogo extends JPanel {
             g.setFont(fredoka.deriveFont((float) 40));
 	        
             if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("empate")){
+            	som.sound("res/win.wav");
                 g.setFont(fredoka.deriveFont((float) 40));
             	g.drawString(nomeVencedor + " venceu o jogo!", 355, 460);
         	}
@@ -68,7 +76,7 @@ public class FimJogo extends JPanel {
 	        /**
 	         * Placar
 	         */
-	        //TODO Placar redimensionável
+	        //TODO Placar redimensionï¿½vel
 	   	 	g.setFont(fredoka.deriveFont((float) 45));
 	   	 	
 	   	 	if(placar == null) return;
