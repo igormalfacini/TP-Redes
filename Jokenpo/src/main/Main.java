@@ -5,11 +5,14 @@ import static conectividade.Flag.NICKNAME;
 import static conectividade.Flag.STOP;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +31,7 @@ import telas.FimJogo;
 import telas.JoinRoom;
 import telas.Lobby;
 import telas.Menu;
+import jokenpo.Sound;
 
 public class Main extends JFrame {
 
@@ -69,6 +73,12 @@ public class Main extends JFrame {
 	public static int defaultPort = 12345;
 	public static File ipServer = new File("ip.txt");
 	
+	/**
+	 * Som
+	 */
+	Sound som = new Sound();
+	
+	
 	/*
 	 * Nome Jogador
 	 */
@@ -84,7 +94,7 @@ public class Main extends JFrame {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		getContentPane().setLayout(new FlowLayout(0, 0, 0));
 		
-		setTitle("Jokenpô!");
+		setTitle("JokenpÃ´!");
 		setResizable(false);
 		
 		/**
@@ -98,7 +108,12 @@ public class Main extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png")));
-
+		
+		Toolkit toolKit = Toolkit.getDefaultToolkit();
+		Image img = toolKit.getImage(getClass().getResource("/cursor.png"));
+		Point hotSpot = new Point(0, 0);
+		Cursor SQl = toolKit.createCustomCursor(img, hotSpot, "Loading");
+		mainWindow.setCursor(SQl);
 	}
 	
 	private void configureFont() { 
@@ -125,7 +140,7 @@ public class Main extends JFrame {
 		
 		menu.getBtnJoin().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		
+				som.sound("res/select.wav");
 				nomeJogador = menu.getNickname();
 				
 				configureJoinRoom();
@@ -134,6 +149,7 @@ public class Main extends JFrame {
 		
 		menu.getBtnCreateRoom().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				som.sound("res/select.wav");
 				/**
 				 * Armazena nome do jogador
 				 */
@@ -169,15 +185,17 @@ public class Main extends JFrame {
 		
 		menu.getBtnExit().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				som.sound("res/select.wav");
 				System.exit(0);
 			}
 		});
+
 	}
 
 	private void configureJoinRoomActionListeners(JoinRoom joinRoom) {
 		joinRoom.getBtnJoin().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+				som.sound("res/select.wav");
 				String ip = joinRoom.getRoomCode().getText();
 				byte[] address = convertStringToAddress(ip);
 						
@@ -201,6 +219,7 @@ public class Main extends JFrame {
 		
 		joinRoom.getBtnVoltar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				som.sound("res/select.wav");
 				configureMenu();
 			}
 		});
@@ -209,6 +228,7 @@ public class Main extends JFrame {
 	private void configureCreateRoomActionListeners(CreateRoom createRoom) {
 		createRoom.getBtnVoltar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				som.sound("res/select.wav");
 				client.sendToServer(STOP + "1");
 				client.stopClient();
 
@@ -220,6 +240,7 @@ public class Main extends JFrame {
 	private void configureLobbyActionListeners(Lobby lobby) {
 		lobby.getBtnConfirm().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				som.sound("res/select.wav");
 				String jogada = lobby.getJogada();
 				lobby.getBtnConfirm().setEnabled(false);
 				lobby.getBtnConfirm().setText(jogada + "!");
@@ -231,6 +252,7 @@ public class Main extends JFrame {
 	private void configureFimJogoActionListeners(FimJogo fimJogo) {
 		fimJogo.getBtnVoltar().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				som.sound("res/select.wav");
 				client.sendToServer(STOP + "1");
 				client.stopClient();
 

@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import jokenpo.Sound;
 import main.Main;
 
 public class FimJogo extends JPanel {
@@ -28,6 +29,12 @@ public class FimJogo extends JPanel {
 	
 	private String nomeVencedor;
 	private String[] placar;
+	
+	/**
+	 * Som
+	 * 
+	 */
+	Sound som = new Sound();
 
 	public FimJogo(String nomeVencedor)
 	{	
@@ -61,7 +68,9 @@ public class FimJogo extends JPanel {
             lblVencedor.setForeground(CUSTOMIZED_BLUE);
             lblVencedor.setBounds(0, 460, 1200, 40);
             if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("empate")){
-    	   	 	add(lblVencedor);
+    	   	 	som.sound("res/win.wav");
+				add(lblVencedor);
+
         	}
         	
         	else {
