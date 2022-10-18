@@ -5,11 +5,14 @@ import static conectividade.Flag.NICKNAME;
 import static conectividade.Flag.STOP;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -91,7 +94,7 @@ public class Main extends JFrame {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		getContentPane().setLayout(new FlowLayout(0, 0, 0));
 		
-		setTitle("Jokenp�!");
+		setTitle("Jokenpô!");
 		setResizable(false);
 		
 		/**
@@ -105,7 +108,12 @@ public class Main extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png")));
-
+		
+		Toolkit toolKit = Toolkit.getDefaultToolkit();
+		Image img = toolKit.getImage(getClass().getResource("/cursor.png"));
+		Point hotSpot = new Point(0, 0);
+		Cursor SQl = toolKit.createCustomCursor(img, hotSpot, "Loading");
+		mainWindow.setCursor(SQl);
 	}
 	
 	private void configureFont() { 
