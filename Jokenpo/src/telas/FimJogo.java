@@ -53,9 +53,17 @@ public class FimJogo extends JPanel {
 	        g.drawImage(background, 0, 0, null);
 	        
 	        g.setColor(CUSTOMIZED_BLUE);
-	        g.setFont(fredoka);
-	        g.setFont(fredoka.deriveFont((float) 40));
-	        g.drawString(nomeVencedor + " venceu o jogo!", 350, 460);
+            g.setFont(fredoka.deriveFont((float) 40));
+	        
+            if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("empate")){
+                g.setFont(fredoka.deriveFont((float) 40));
+            	g.drawString(nomeVencedor + " venceu o jogo!", 355, 460);
+        	}
+        	
+        	else {
+                g.setFont(fredoka.deriveFont((float) 50));
+            	g.drawString("Empate!", 500, 460);
+        	}
 	        
 	        /**
 	         * Placar
@@ -66,11 +74,11 @@ public class FimJogo extends JPanel {
 	   	 	if(placar == null) return;
 	   	 	
 	   	 	g.setFont(fredoka.deriveFont((float) 30));
-	   	 	g.drawString(placar[0], 340, 510);
-		 	g.drawString(placar[1], 550, 510);
-		 	g.drawString("X", 595, 510);
-		 	g.drawString(placar[3], 640, 510);
-		 	g.drawString(placar[2], 680, 510);
+	   	 	g.drawString(placar[0], 340, 550);
+		 	g.drawString(placar[1], 550, 550);
+		 	g.drawString("X", 595, 550);
+		 	g.drawString(placar[3], 640, 550);
+		 	g.drawString(placar[2], 680, 550);
 	}
 	
 	public JButton getBtnVoltar() {

@@ -159,18 +159,14 @@ public class Lobby extends JPanel {
          * Fim do round
          */
         else {
-        	if(nomeVencedor == null || nomeVencedor.equalsIgnoreCase(null)){
-        		g.setColor(CUSTOMIZED_BLUE);
-                g.setFont(fredoka.deriveFont((float) 50));
-                 
-            	g.drawString("Empate!", 500, 500); //TODO nao funciona
+        	if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("null")){
+                g.setFont(fredoka.deriveFont((float) 40));
+            	g.drawString(nomeVencedor + " venceu o round!", 340, 500);
         	}
         	
         	else {
-        		g.setColor(CUSTOMIZED_BLUE);
-                g.setFont(fredoka.deriveFont((float) 40));
-                 
-            	g.drawString(nomeVencedor + " venceu o round!", 340, 500);
+                g.setFont(fredoka.deriveFont((float) 50));
+            	g.drawString("Empate!", 500, 500);
         	}
         }
 	}
