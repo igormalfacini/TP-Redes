@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 import main.Main;
 
@@ -32,6 +33,8 @@ public class Lobby extends JPanel {
 	private ImageIcon disabledArrow = new ImageIcon("res/disabled-arrow-right.png");
 	
 	private JLabel lblLupa;
+	private JLabel lblPlacar;
+	private JLabel lblVencedor;
 
 	private JButton btnConfirm;
 	private ButtonGroup radioGroup;
@@ -123,19 +126,21 @@ public class Lobby extends JPanel {
         
         
         g.setColor(CUSTOMIZED_BLUE);
+        
         /**
          * Placar
          */
-        //TODO Placar redimensionável
    	 	g.setFont(fredoka.deriveFont((float) 45));
    	 	g.drawString("Round " + placar[4], 510, 200);
    	 	
-   	 	g.setFont(fredoka.deriveFont((float) 30));
-   	 	g.drawString(placar[0], 340, 260);
-	 	g.drawString(placar[1], 550, 260);
-	 	g.drawString("X", 595, 260);
-	 	g.drawString(placar[3], 640, 260);
-	 	g.drawString(placar[2], 680, 260);
+   	 	String strPlacar = placar[0] + "  " + placar[1] + "  " + "X" + "  " + placar[3] + "  " + placar[2]; 
+   	 	if(lblPlacar != null)
+   	 		remove(lblPlacar);
+   	 	lblPlacar = new JLabel(strPlacar, SwingConstants.CENTER);
+   	 	lblPlacar.setFont(fredoka.deriveFont((float) 28));
+   	 	lblPlacar.setForeground(CUSTOMIZED_BLUE);
+   	 	lblPlacar.setBounds(350, 220, 500, 40);
+   	 	add(lblPlacar);
         
    	 	/**
    	 	 * Informações que somente aparecem enquanto o round está sendo jogado
@@ -159,15 +164,19 @@ public class Lobby extends JPanel {
          * Fim do round
          */
         else {
-        	if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("null")){
-                g.setFont(fredoka.deriveFont((float) 40));
-            	g.drawString(nomeVencedor + " venceu o round!", 340, 500);
-        	}
-        	
-        	else {
-                g.setFont(fredoka.deriveFont((float) 50));
-            	g.drawString("Empate!", 500, 500);
-        	}
+        	 lblVencedor = new JLabel("<html><p> " + nomeVencedor + " venceu o round! </p> </html>", SwingConstants.CENTER);
+             lblVencedor.setFont(fredoka.deriveFont((float) 35));
+             lblVencedor.setForeground(CUSTOMIZED_BLUE);
+             lblVencedor.setBounds(400, 500, 400, 100);
+            
+             if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("null")){
+     	   	 	add(lblVencedor);
+         	}
+         	
+         	else {
+                 lblVencedor.setText("Empate!");
+                 add(lblVencedor);
+         	}
         }
 	}
 
@@ -216,6 +225,7 @@ public class Lobby extends JPanel {
 		nomeVencedor = null;
 		
 		lblLupa.setVisible(true);
+		remove(lblVencedor);
 		
 		btnConfirm.setText("Confirmar");
 		btnConfirm.setEnabled(true);

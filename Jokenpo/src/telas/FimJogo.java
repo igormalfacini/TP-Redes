@@ -10,7 +10,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import main.Main;
 
@@ -21,6 +23,8 @@ public class FimJogo extends JPanel {
 	private String pathBackground = "/background.png";
 
 	private JButton btnVoltar;
+	private JLabel lblPlacar;
+	private JLabel lblVencedor;
 	
 	private String nomeVencedor;
 	private String[] placar;
@@ -52,33 +56,33 @@ public class FimJogo extends JPanel {
 	    super.paintComponent(g);
 	        g.drawImage(background, 0, 0, null);
 	        
-	        g.setColor(CUSTOMIZED_BLUE);
-            g.setFont(fredoka.deriveFont((float) 40));
-	        
+            lblVencedor = new JLabel(nomeVencedor, SwingConstants.CENTER);
+            lblVencedor.setFont(fredoka.deriveFont((float) 40));
+            lblVencedor.setForeground(CUSTOMIZED_BLUE);
+            lblVencedor.setBounds(0, 460, 1200, 40);
             if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("empate")){
-                g.setFont(fredoka.deriveFont((float) 40));
-            	g.drawString(nomeVencedor + " venceu o jogo!", 355, 460);
+    	   	 	add(lblVencedor);
         	}
         	
         	else {
                 g.setFont(fredoka.deriveFont((float) 50));
-            	g.drawString("Empate!", 500, 460);
+                lblVencedor.setText("Empate!");
+                add(lblVencedor);
         	}
 	        
+            
 	        /**
 	         * Placar
 	         */
-	        //TODO Placar redimensionável
-	   	 	g.setFont(fredoka.deriveFont((float) 45));
 	   	 	
 	   	 	if(placar == null) return;
 	   	 	
-	   	 	g.setFont(fredoka.deriveFont((float) 30));
-	   	 	g.drawString(placar[0], 340, 550);
-		 	g.drawString(placar[1], 550, 550);
-		 	g.drawString("X", 595, 550);
-		 	g.drawString(placar[3], 640, 550);
-		 	g.drawString(placar[2], 680, 550);
+	   	 	String strPlacar = placar[0] + "  " + placar[1] + "  " + "X" + "  " + placar[3] + "  " + placar[2]; 
+	   	 	lblPlacar = new JLabel(strPlacar, SwingConstants.CENTER);
+	   	 	lblPlacar.setFont(fredoka.deriveFont((float) 30));
+	   	 	lblPlacar.setForeground(CUSTOMIZED_BLUE);
+	   	 	lblPlacar.setBounds(0, 500, 1200, 40);
+	   	 	add(lblPlacar);
 	}
 	
 	public JButton getBtnVoltar() {
