@@ -54,44 +54,44 @@ public class FimJogo extends JPanel {
 		btnVoltar = new JButton("Voltar ao Menu Principal");
 		btnVoltar.setFont(fredoka);
 		btnVoltar.setBackground(CUSTOMIZED_BLUE);
-		btnVoltar.setBounds(360, 650, 500, 40);
+		btnVoltar.setBounds(230, 550, 500, 40);
 		add(btnVoltar);
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-	        g.drawImage(background, 0, 0, null);
-	        
-            lblVencedor = new JLabel(nomeVencedor + " venceu o jogo!", SwingConstants.CENTER);
-            lblVencedor.setFont(fredoka.deriveFont((float) 40));
-            lblVencedor.setForeground(CUSTOMIZED_BLUE);
-            lblVencedor.setBounds(0, 460, 1200, 40);
-            if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("empate")){
-    	   	 	som.sound("res/win.wav");
-				add(lblVencedor);
+        g.drawImage(background, 0, 0, null);
+        
+        lblVencedor = new JLabel(nomeVencedor + " venceu o jogo!", SwingConstants.CENTER);
+        lblVencedor.setFont(fredoka.deriveFont((float) 40));
+        lblVencedor.setForeground(CUSTOMIZED_BLUE);
+        lblVencedor.setBounds(0, 370, 960, 60);
+        if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("empate")){
+	   	 	som.sound("res/win.wav");
+			add(lblVencedor);
 
-        	}
-        	
-        	else {
-                g.setFont(fredoka.deriveFont((float) 50));
-                lblVencedor.setText("Empate!");
-                add(lblVencedor);
-        	}
-	        
-            
-	        /**
-	         * Placar
-	         */
-	   	 	
-	   	 	if(placar == null) return;
-	   	 	
-	   	 	String strPlacar = placar[0] + "  " + placar[1] + "  " + "X" + "  " + placar[3] + "  " + placar[2]; 
-	   	 	lblPlacar = new JLabel(strPlacar, SwingConstants.CENTER);
-	   	 	lblPlacar.setFont(fredoka.deriveFont((float) 30));
-	   	 	lblPlacar.setForeground(CUSTOMIZED_BLUE);
-	   	 	lblPlacar.setBounds(0, 500, 1200, 40);
-	   	 	add(lblPlacar);
+    	}
+    	
+    	else {
+            g.setFont(fredoka.deriveFont((float) 50));
+            lblVencedor.setText("Empate!");
+            add(lblVencedor);
+    	}
+        
+        
+        /**
+         * Placar
+         */
+   	 	
+   	 	if(placar == null) return;
+   	 	
+   	 	String strPlacar = placar[0] + "  " + placar[1] + "  " + "X" + "  " + placar[3] + "  " + placar[2]; 
+   	 	lblPlacar = new JLabel(strPlacar, SwingConstants.CENTER);
+   	 	lblPlacar.setFont(fredoka.deriveFont((float) 30));
+   	 	lblPlacar.setForeground(CUSTOMIZED_BLUE);
+   	 	lblPlacar.setBounds(0, 440, 960, 40);
+   	 	add(lblPlacar);
 	}
 	
 	public JButton getBtnVoltar() {

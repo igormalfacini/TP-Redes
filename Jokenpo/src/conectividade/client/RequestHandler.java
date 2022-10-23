@@ -46,7 +46,7 @@ public class RequestHandler extends Thread {
 				String value = line[1];
 				
 				if("INICIAR".equals(flag)) {
-					cliente.startLobby();
+					cliente.startInicioJogo();
 				}
 				
 				if("ADVERSARIOJOGOU".equals(flag)) {

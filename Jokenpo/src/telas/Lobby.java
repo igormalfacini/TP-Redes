@@ -138,7 +138,7 @@ public class Lobby extends JPanel {
    	 	lblPlacar = new JLabel(strPlacar, SwingConstants.CENTER);
    	 	lblPlacar.setFont(fredoka.deriveFont((float) 28));
    	 	lblPlacar.setForeground(CUSTOMIZED_BLUE);
-   	 	lblPlacar.setBounds(250, 170, 500, 40);
+   	 	lblPlacar.setBounds(0, 170, 960, 40);
    	 	add(lblPlacar);
         
    	 	/**

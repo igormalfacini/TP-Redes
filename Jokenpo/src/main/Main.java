@@ -28,6 +28,7 @@ import conectividade.client.Client;
 import conectividade.server.Server;
 import telas.CreateRoom;
 import telas.FimJogo;
+import telas.InicioJogo;
 import telas.JoinRoom;
 import telas.Lobby;
 import telas.Menu;
@@ -62,6 +63,7 @@ public class Main extends JFrame {
 	private JPanel currentPanel = null;
 	public Lobby lobby;
 	public FimJogo fimJogo;
+	public InicioJogo inicioJogo;
 	
 	/**
 	 * Conectividade
@@ -331,6 +333,26 @@ public class Main extends JFrame {
 		add(createRoom);
 		validate();
 		repaint();
+	}
+	
+	public void configureInicioJogo() {
+		if(currentPanel != null)
+			remove(currentPanel);
+		
+		inicioJogo = new InicioJogo();
+		currentPanel = inicioJogo;
+		
+		add(inicioJogo);
+		validate();
+		repaint();	
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		configureLobby();
 	}
 	
 	public void configureLobby() {

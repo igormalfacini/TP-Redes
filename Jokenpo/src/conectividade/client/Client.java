@@ -70,8 +70,8 @@ public class Client {
 		return requestHandler.sendToServer(message, getResponse);
 	}
 	
-	public void startLobby() {
-		mainWindow.configureLobby();
+	public void startInicioJogo() {
+		mainWindow.configureInicioJogo();
 	}
 	
 	public void setAdversarioJogou(String nomeJogador) {
