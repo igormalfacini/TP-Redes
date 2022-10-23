@@ -6,8 +6,11 @@ import static main.Main.fredoka;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Enumeration;
 
 import javax.imageio.ImageIO;
@@ -19,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 import main.Main;
 
@@ -34,6 +38,7 @@ public class Lobby extends JPanel {
 	
 	private JLabel lblLupa;
 	private JLabel lblPlacar;
+	private JLabel lblTimer;
 	
 	private JButton btnConfirm;
 	private ButtonGroup radioGroup;
@@ -42,6 +47,11 @@ public class Lobby extends JPanel {
 	private boolean adversarioJogou = false;
 	private boolean fimRound = false;
 	private String nomeVencedor = null;
+	
+	private Timer timer;
+	private int segundos, minutos;
+	private String ddSegundos, ddMinutos;
+	private DecimalFormat dFormat = new DecimalFormat("00");
 	
 	private String[] placar;
 	
@@ -99,6 +109,22 @@ public class Lobby extends JPanel {
 		btnConfirm.setBackground(CUSTOMIZED_BLUE);
 		btnConfirm.setBounds(390, 550, 200, 40);
 		add(btnConfirm);	
+		
+		/**
+		 * Timer 
+		 */
+		lblTimer = new JLabel();
+		lblTimer.setBounds(440, 350, 100, 40);
+		lblTimer.setHorizontalAlignment(JLabel.CENTER);
+		lblTimer.setFont(fredoka);
+		lblTimer.setForeground(CUSTOMIZED_BLUE);
+		add(lblTimer);
+		
+		lblTimer.setText("00:10");
+		segundos = 10;
+		minutos = 0;
+		countdownTimer();
+		timer.start();
 	}
 	
 	@Override
@@ -225,6 +251,13 @@ public class Lobby extends JPanel {
 		btnConfirm.setEnabled(true);
 		btnConfirm.setVisible(true);
 		
+		lblTimer.setVisible(true);
+		lblTimer.setText("00:10");
+		segundos = 10;
+		minutos = 0;
+		countdownTimer();
+		timer.start();
+		
 		for (Enumeration<AbstractButton> buttons = radioGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
             button.setEnabled(true);
@@ -245,6 +278,34 @@ public class Lobby extends JPanel {
                 buttonName = button.getName();
         }
         return buttonName;
-	}		
+	}
+	
+	public void countdownTimer() {
+		
+		timer = new Timer(1000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				segundos--;
+				ddSegundos = dFormat.format(segundos);
+				ddMinutos = dFormat.format(minutos);	
+				lblTimer.setText(ddMinutos + ":" + ddSegundos);
+				
+				if(segundos == -1) {
+					segundos = 59;
+					minutos--;
+					ddSegundos = dFormat.format(segundos);
+					ddMinutos = dFormat.format(minutos);	
+					lblTimer.setText(ddMinutos + ":" + ddSegundos);
+				}
+				if(minutos == 0 && segundos == 0) {
+					timer.stop();
+					btnConfirm.doClick();
+					lblTimer.setVisible(false);
+				}
+			}
+		});		
+	}
 }
 
