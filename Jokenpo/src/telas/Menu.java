@@ -47,25 +47,25 @@ public class Menu extends JPanel {
 		
 		inputNickname = new JTextField("Player 1");
 		inputNickname.setFont(fredoka);
-		inputNickname.setBounds(250, 500, 700, 60);
+		inputNickname.setBounds(140, 400, 690, 60);
 		add(inputNickname);
 		
 		btnJoin = new JButton("Juntar-se");
 		btnJoin.setFont(fredoka);
 		btnJoin.setBackground(CUSTOMIZED_BLUE);
-		btnJoin.setBounds(500, 600, 200, 40);
+		btnJoin.setBounds(390, 500, 200, 40);
 		add(btnJoin);
 		
 		btnCreateRoom = new JButton("Criar Sala");
 		btnCreateRoom.setFont(fredoka);
 		btnCreateRoom.setBackground(CUSTOMIZED_BLUE);
-		btnCreateRoom.setBounds(500, 650, 200, 40);
+		btnCreateRoom.setBounds(390, 550, 200, 40);
 		add(btnCreateRoom);
 		
 		btnExit = new JButton("Sair");
 		btnExit.setFont(fredoka);
 		btnExit.setBackground(CUSTOMIZED_BLUE);
-		btnExit.setBounds(500, 700, 200, 40);
+		btnExit.setBounds(390, 600, 200, 40);
 		add(btnExit);
 	
 		som.sound("res/start.wav");
@@ -78,15 +78,16 @@ public class Menu extends JPanel {
 	        
 	        g.setColor(CUSTOMIZED_BLUE);
 	        g.setFont(fredoka);
-	        g.drawString("Informe seu nome", 479, 480);
+	        g.drawString("Informe seu nome", 379, 380);
 	}
 
+	//TODO Consertar mensagem de erro
 	public void paintErrorMessage() {
 		Graphics g = background.getGraphics();
 		
 		g.setColor(RED);
         g.setFont(fredoka);
-        g.drawString("Erro ao iniciar Servidor", 455, 800);
+        g.drawString("Erro ao iniciar Servidor", 355, 600);
 	}
 	
 	public String getNickname() {

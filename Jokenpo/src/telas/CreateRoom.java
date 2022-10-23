@@ -41,18 +41,18 @@ public class CreateRoom  extends JPanel {
 		
 		roomCode = new JTextField(Main.server.getAddress());
 		roomCode.setFont(fredoka);
-		roomCode.setBounds(250, 500, 700, 60);
+		roomCode.setBounds(140, 400, 690, 60);
 		roomCode.setEnabled(false);
 		add(roomCode);
 		
 		JLabel label = new JLabel(new ImageIcon(getClass().getResource("/ellipsis.gif")));
-		label.setBounds(930, 700, 100, 100);
+		label.setBounds(730, 550, 100, 100);
 		add(label);
 		
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.setFont(fredoka);
 		btnVoltar.setBackground(CUSTOMIZED_BLUE);
-		btnVoltar.setBounds(500, 650, 200, 40);
+		btnVoltar.setBounds(390, 550, 200, 40);
 		add(btnVoltar);
 	}
 	
@@ -63,11 +63,11 @@ public class CreateRoom  extends JPanel {
 	        
 	        g.setColor(CUSTOMIZED_BLUE);
 	        g.setFont(fredoka);
-	        g.drawString("Código da Sala", 500, 480);
+	        g.drawString("Código da Sala", 390, 380);
 	        
 	        g.setColor(CUSTOMIZED_BLUE);
 	        g.setFont(fredoka.deriveFont(6));
-	        g.drawString("Aguardando Conexão", 850, 800);
+	        g.drawString("Aguardando Conexão", 650, 650);
 	}
 
 	public JButton getBtnVoltar() {

@@ -45,8 +45,8 @@ public class Main extends JFrame {
 	/**
 	 * Tela
 	 */
-	public static final int WIDTH = 1200;
-	public static final int HEIGHT = 900;
+	public static final int WIDTH = 960;
+	public static final int HEIGHT = 720;
 	private static Main mainWindow;
 	
 	/**

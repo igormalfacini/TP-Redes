@@ -34,7 +34,7 @@ public class Lobby extends JPanel {
 	
 	private JLabel lblLupa;
 	private JLabel lblPlacar;
-
+	
 	private JButton btnConfirm;
 	private ButtonGroup radioGroup;
 	
@@ -66,7 +66,7 @@ public class Lobby extends JPanel {
 		btnTesoura.setName("TESOURA");
 		btnTesoura.setSelected(true);
 		btnTesoura.setBackground(BACKGROUND_COLOR);
-		btnTesoura.setBounds(80, 350, 70, 64);
+		btnTesoura.setBounds(60, 270, 70, 64);
 		btnTesoura.setSelectedIcon(selectedArrow);
 		btnTesoura.setDisabledIcon(disabledArrow);
 		radioGroup.add(btnTesoura);
@@ -75,7 +75,7 @@ public class Lobby extends JPanel {
 		JRadioButton btnPapel = new JRadioButton(disabledArrow);
 		btnPapel.setName("PAPEL");
 		btnPapel.setBackground(BACKGROUND_COLOR);
-		btnPapel.setBounds(80, 530, 70, 64);
+		btnPapel.setBounds(60, 420, 70, 64);
 		btnPapel.setSelectedIcon(selectedArrow);
 		btnPapel.setDisabledIcon(disabledArrow);
 		radioGroup.add(btnPapel);
@@ -84,20 +84,20 @@ public class Lobby extends JPanel {
 		JRadioButton btnPedra = new JRadioButton(disabledArrow);
 		btnPedra.setName("PEDRA");
 		btnPedra.setBackground(BACKGROUND_COLOR);
-		btnPedra.setBounds(80, 700, 70, 64);
+		btnPedra.setBounds(60, 560, 70, 64);
 		btnPedra.setSelectedIcon(selectedArrow);
 		btnPedra.setDisabledIcon(disabledArrow);
 		radioGroup.add(btnPedra);
 		add(btnPedra);
 		
 		lblLupa = new JLabel(new ImageIcon(getClass().getResource("/magnifier.gif")));
-		lblLupa.setBounds(860, 400, 200, 200);
+		lblLupa.setBounds(690, 300, 200, 200);
 		add(lblLupa);
 		
 		btnConfirm = new JButton("Confirmar");
 		btnConfirm.setFont(fredoka);
 		btnConfirm.setBackground(CUSTOMIZED_BLUE);
-		btnConfirm.setBounds(500, 700, 200, 40);
+		btnConfirm.setBounds(390, 550, 200, 40);
 		add(btnConfirm);	
 	}
 	
@@ -110,17 +110,17 @@ public class Lobby extends JPanel {
          */
 		if(jogadaArdversario == null || !jogadaArdversario.equalsIgnoreCase("TESOURA")) {
 			g.setColor(BACKGROUND_COLOR);
-			g.fillRect(850, 310, 170, 150);
+			g.fillRect(690, 250, 150, 120);
 		}
         
 		if(jogadaArdversario == null || !jogadaArdversario.equalsIgnoreCase("PAPEL")) {
 			g.setColor(BACKGROUND_COLOR);
-			g.fillRect(850, 480, 170, 150);
+			g.fillRect(690, 390, 150, 120);
 		}
 		
         if(jogadaArdversario == null || !jogadaArdversario.equalsIgnoreCase("PEDRA")) {
         	g.setColor(BACKGROUND_COLOR);
-        	g.fillRect(850, 650, 170, 150);
+        	g.fillRect(690, 540, 150, 120);
         }
         
         
@@ -130,7 +130,7 @@ public class Lobby extends JPanel {
          * Placar
          */
    	 	g.setFont(fredoka.deriveFont((float) 45));
-   	 	g.drawString("Round " + placar[4], 510, 200);
+   	 	g.drawString("Round " + placar[4], 410, 150);
    	 	
    	 	String strPlacar = placar[0] + "  " + placar[1] + "  " + "X" + "  " + placar[3] + "  " + placar[2]; 
    	 	if(lblPlacar != null)
@@ -138,7 +138,7 @@ public class Lobby extends JPanel {
    	 	lblPlacar = new JLabel(strPlacar, SwingConstants.CENTER);
    	 	lblPlacar.setFont(fredoka.deriveFont((float) 28));
    	 	lblPlacar.setForeground(CUSTOMIZED_BLUE);
-   	 	lblPlacar.setBounds(350, 220, 500, 40);
+   	 	lblPlacar.setBounds(250, 170, 500, 40);
    	 	add(lblPlacar);
         
    	 	/**
@@ -147,16 +147,16 @@ public class Lobby extends JPanel {
         if(!fimRound) {
             g.setFont(fredoka.deriveFont((float) 16));
              
-        	g.drawString("Selecione sua jogada clicando", 470, 650);
-        	g.drawString("sobre a seta correspondente!", 470, 665);   
+        	g.drawString("Selecione sua jogada clicando", 370, 520);
+        	g.drawString("sobre a seta correspondente!", 370, 535);   
         	
-       	 	g.setFont(fredoka.deriveFont((float) 20));
+       	 	g.setFont(fredoka.deriveFont((float) 16));
        	 	
         	if(!adversarioJogou) {
-				g.drawString("Aguardando jogada", 870, 620);
-				g.drawString("adversária", 920, 640);
+				g.drawString("Aguardando jogada", 690, 520);
+				g.drawString("adversária", 725, 545);
            } else {
-           		g.drawString("Jogada Confirmada!", 870, 520);
+           		g.drawString("Jogada Confirmada!", 690, 390);
            }
         }
         /**
@@ -166,11 +166,11 @@ public class Lobby extends JPanel {
         	
         	if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("null")){
                 g.setFont(fredoka.deriveFont((float) 40));
-                g.drawString(nomeVencedor, 430, 550);
-            	g.drawString("venceu o round!", 450, 600);
+                g.drawString(nomeVencedor, 410, 380);
+            	g.drawString("venceu o round!", 340, 420);
         	} else {
         		g.setFont(fredoka.deriveFont((float) 50));
-            	g.drawString("Empate!", 500, 500);
+            	g.drawString("Empate!", 390, 390);
         	}
         }
 	}

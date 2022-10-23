@@ -43,7 +43,7 @@ public class JoinRoom extends JPanel {
 		
 		roomCode = new JFormattedTextField();
 		roomCode.setFont(fredoka);
-		roomCode.setBounds(250, 500, 700, 60);
+		roomCode.setBounds(140, 400, 690, 60);
 		try {
 			MaskFormatter mask = new MaskFormatter();
 			mask.setMask("###.###.###.###");
@@ -55,13 +55,13 @@ public class JoinRoom extends JPanel {
 		btnJoin = new JButton("Juntar-se");
 		btnJoin.setFont(fredoka);
 		btnJoin.setBackground(CUSTOMIZED_BLUE);
-		btnJoin.setBounds(500, 600, 200, 40);
+		btnJoin.setBounds(390, 500, 200, 40);
 		add(btnJoin);
 		
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.setFont(fredoka);
 		btnVoltar.setBackground(CUSTOMIZED_BLUE);
-		btnVoltar.setBounds(500, 650, 200, 40);
+		btnVoltar.setBounds(390, 550, 200, 40);
 		add(btnVoltar);
 	}
 	
@@ -72,7 +72,7 @@ public class JoinRoom extends JPanel {
 	        
 	        g.setColor(CUSTOMIZED_BLUE);
 	        g.setFont(fredoka);
-	        g.drawString("Informe o Código da Sala", 430, 480);
+	        g.drawString("Informe o Código da Sala", 330, 380);
 	}
 	
 	public void paintErrorMessage() {
