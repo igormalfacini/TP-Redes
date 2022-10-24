@@ -72,7 +72,7 @@ public class Main extends JFrame {
 	private static boolean hasClient;
 	public static Server server;
 	public static Client client;
-	public static int defaultPort = 12345;
+	public static int defaultPort = 2002;
 	public static File ipServer = new File("ip.txt");
 	
 	/**
