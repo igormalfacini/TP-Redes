@@ -120,9 +120,9 @@ public class Lobby extends JPanel {
 		lblTimer.setForeground(CUSTOMIZED_BLUE);
 		add(lblTimer);
 		
-		lblTimer.setText("00:10");
-		segundos = 10;
-		minutos = 0;
+		lblTimer.setText("01:00");
+		segundos = 00;
+		minutos = 1;
 		countdownTimer();
 		timer.start();
 	}
@@ -189,6 +189,7 @@ public class Lobby extends JPanel {
          * Fim do round
          */
         else {
+        	lblTimer.setVisible(false);
         	
         	if(nomeVencedor != null && !nomeVencedor.equalsIgnoreCase("null")){
                 g.setFont(fredoka.deriveFont((float) 40));
@@ -252,9 +253,9 @@ public class Lobby extends JPanel {
 		btnConfirm.setVisible(true);
 		
 		lblTimer.setVisible(true);
-		lblTimer.setText("00:10");
-		segundos = 10;
-		minutos = 0;
+		lblTimer.setText("01:00");
+		segundos = 00;
+		minutos = 1;
 		countdownTimer();
 		timer.start();
 		
